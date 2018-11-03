@@ -1,0 +1,18 @@
+Package: hillr
+Type: Package
+Title: Interaction With A Hilltop Timeseries Server
+Version: 0.1.0
+Author: Jeff Cooke
+Maintainer: Jeff Cooke <jeffjcooke@hotmail.com>
+Description: Functions to interact with a Hilltop time series server 
+    and provide data in R data frames.
+License: MIT + file LICENCE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    XML,
+    reshape2,
+    plyr,
+    RCurl,
+    stats
+RoxygenNote: 6.1.0
