@@ -4,7 +4,13 @@
 \alias{hilltopEnsembleStatBkgnd}
 \title{Hilltop Ensemble Statistics Background.}
 \usage{
-hilltopEnsembleStatBkgnd(dataxml)
+hilltopEnsembleStatBkgnd(xmldata)
+}
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+A single line dataframe of the statistics background information.
 }
 \description{
 Helper Function that takes the parsed xml from an Ensemble Statistics request.

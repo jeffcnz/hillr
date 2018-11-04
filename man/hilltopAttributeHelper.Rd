@@ -4,7 +4,13 @@
 \alias{hilltopAttributeHelper}
 \title{Hilltop XML Attribute Identifier.}
 \usage{
-hilltopAttributeHelper(x)
+hilltopAttributeHelper(xmlNode)
+}
+\arguments{
+\item{xmlNode}{The XML from a Hilltop XML node.}
+}
+\value{
+The name of the attribute described by the XML node.
 }
 \description{
 Helper function to return the appropriate xml attribute name depending whether

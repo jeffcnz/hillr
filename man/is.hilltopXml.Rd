@@ -6,6 +6,12 @@
 \usage{
 is.hilltopXml(xmldata)
 }
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+logical TRUE / FALSE
+}
 \description{
 Checks if an xml document is hilltop xml, returns True or False accordingly.
 }

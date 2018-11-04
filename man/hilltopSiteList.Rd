@@ -4,14 +4,15 @@
 \alias{hilltopSiteList}
 \title{Get A List of Sites Available From A Hilltop Web Service.}
 \usage{
-hilltopSiteList(sitexml)
-
-hilltopSiteList(sitexml)
+hilltopSiteList(xmldata)
+}
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+A dataframe of available sites (with locations if available).
 }
 \description{
-Takes an parsed xml document from a Hilltop SiteList request.
-Returns a dataframe of the available sites and location if available.
-
 Takes an parsed xml document from a Hilltop SiteList request.
 Returns a dataframe of the available sites and location if available.
 }

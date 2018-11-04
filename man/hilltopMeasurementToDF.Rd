@@ -4,11 +4,17 @@
 \alias{hilltopMeasurementToDF}
 \title{Hilltop Measurement To Data Frame.}
 \usage{
-hilltopMeasurementToDF(dataxml)
+hilltopMeasurementToDF(xmldata)
+}
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+A dataframe of data for each timestep.
 }
 \description{
 Helper function that reads the nodes within a the Measurement node of a Hilltop
-XML response from a anyXmlParse(url) request such as dataxml<-anyXmlParse(url).
+XML response from a anyXmlParse(url) request such as xmldata<-anyXmlParse(url).
 Returns a dataframe of the data for each timestamp. Handles missing results and
 doesn't require prior knowledge of parameter names. Handles true measurements
 and WQ Sample requests.

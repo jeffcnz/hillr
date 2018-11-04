@@ -4,11 +4,17 @@
 \alias{hilltopDataSourceToDF}
 \title{Hilltop Data Source To Data Frame.}
 \usage{
-hilltopDataSourceToDF(dataxml)
+hilltopDataSourceToDF(xmldata)
+}
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+A dataframe of the Hilltop datasource information.
 }
 \description{
 Helper function that reads the nodes within a the DataSource ItemInfo node of a
 Hilltop XML response from a anyXmlParse(url) request such as
-dataxml<-anyXmlParse(url). Returns a dataframe of the Info for each Item.
+xmldata<-anyXmlParse(url). Returns a dataframe of the Info for each Item.
 Handles missing results and doen't require prior knowledge of the items.
 }

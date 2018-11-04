@@ -7,18 +7,16 @@ Helper function.
 Takes an xml document from a Hilltop MeasurementList at a Site request.
 Returns a dataframe of the measurement information and datasource info.}
 \usage{
-hilltopMeasInfoListExtra(measlistxml)
-
-hilltopMeasInfoListExtra(measlistxml)
+hilltopMeasInfoListExtra(xmldata)
+}
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+A dataframe of datasources and measurments at a site with all available datasource and measurement information.
 }
 \description{
 Old Function To Get Data SOurce And Measurement Information.
-Helper function.
-Takes an xml document from a Hilltop MeasurementList at a Site request.
-Returns a dataframe of the measurement information and datasource info.
-
-Old Function To Get Data SOurce And Measurement Information.
-Old Function To Get Data Source And Measurement Information.
 Helper function.
 Takes an xml document from a Hilltop MeasurementList at a Site request.
 Returns a dataframe of the measurement information and datasource info.

@@ -4,13 +4,22 @@
 \alias{hilltopMeasurement}
 \title{Hilltop Measurement Request As A Data Frame.}
 \usage{
-hilltopMeasurement(dataxml)
+hilltopMeasurement(xmldata)
+}
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+A dataframe of measurement data and metadata from the Hilltop
+  datasource.
 }
 \description{
 Main function that converts a Hilltop XML document from a anyXmlParse(url)
-request such as dataxml<-anyXmlParse(url) for a water quality measurement into
-a dataframe that contains the measurement information. It returns a dataframe
-of the data for each timestamp, including DataSource Information and the Site
-Name. This dataframe can be merged with a WQ Sample dataframe processed using
-hilltopMeasurementToDF
+request such as xmldata<-anyXmlParse(url) for a water quality measurement
+into a dataframe that contains the measurement information. It returns a
+dataframe of the data for each timestamp, including DataSource Information
+and the Site Name. Combines the results of the
+hilltopMeasurementToDF(xmldata) and hilltopDataSourceToDF(xmldata) functions.
+This dataframe can be merged with a WQ Sample dataframe processed using
+hilltopMeasurementToDF.
 }

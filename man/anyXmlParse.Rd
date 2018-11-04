@@ -6,8 +6,15 @@
 \usage{
 anyXmlParse(url)
 }
+\arguments{
+\item{url}{A url that returns an XML document.}
+}
+\value{
+A parsed XML document
+}
 \description{
 Helper function to parse data from a hilltop server. Takes a valid url as an
-input and returns a parsed xml document ready for other functions. Handles
-https requests as well as http.
+input and returns a parsed xml document ready for other functions. Uses
+xmlParse from the XML library, but enables https requests to be processed as
+well as http.
 }

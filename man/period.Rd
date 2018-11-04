@@ -4,7 +4,13 @@
 \alias{period}
 \title{Determine The TimePeriod Of Hilltop XML Ensemble Data.}
 \usage{
-period(dataxml)
+period(xmldata)
+}
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+A string describing a time period.  Possible values are "Hour", "Day", or "Month".
 }
 \description{
 Helper function to determine what the measurement period of the EnsembleStats is.

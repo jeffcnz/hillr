@@ -4,15 +4,15 @@
 \alias{hilltopDsMeasListFull}
 \title{Hilltop Data Source Information And Measurement Information At A Site.}
 \usage{
-hilltopDsMeasListFull(measlistxml)
-
-hilltopDsMeasListFull(measlistxml)
+hilltopDsMeasListFull(xmldata)
+}
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+A dataframe of datasources and measurments at a site with all available datasource and measurement information.
 }
 \description{
-Takes an xml document from a Hilltop MeasurementList at a Site request.
-Returns a dataframe of all of the datasource and measurement information
-combined.
-
 Takes an xml document from a Hilltop MeasurementList at a Site request.
 Returns a dataframe of all of the datasource and measurement information
 combined.

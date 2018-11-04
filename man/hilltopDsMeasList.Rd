@@ -4,15 +4,15 @@
 \alias{hilltopDsMeasList}
 \title{Hilltop Data Source Information And Measurements At A Site.}
 \usage{
-hilltopDsMeasList(measlistxml)
-
-hilltopDsMeasList(measlistxml)
+hilltopDsMeasList(xmldata)
+}
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+A dataframe of available measurements at a site, including the datasource information.
 }
 \description{
-Helper function.
-Takes an xml document from a Hilltop MeasurementList at a Site request.
-Returns a dataframe of the datasource information and measurements names.
-
 Helper function.
 Takes an xml document from a Hilltop MeasurementList at a Site request.
 Returns a dataframe of the datasource information and measurements names.

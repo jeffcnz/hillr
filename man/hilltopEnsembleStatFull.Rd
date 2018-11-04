@@ -4,7 +4,13 @@
 \alias{hilltopEnsembleStatFull}
 \title{Hilltop Ensemble Statistics By Time Period, With Summary Information.}
 \usage{
-hilltopEnsembleStatFull(dataxml)
+hilltopEnsembleStatFull(xmldata)
+}
+\arguments{
+\item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
+}
+\value{
+A dataframe of the ensemble statistics along with the background metadata.
 }
 \description{
 Takes the parsed xml from an EnsembleStats Request. Returns a dataframe of the
