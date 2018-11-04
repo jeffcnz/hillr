@@ -1,15 +1,17 @@
 #' Hilltop Measurement To Data Frame.
 #'
 #' Helper function that reads the nodes within a the Measurement node of a Hilltop
-#' XML response from a anyXmlParse(url) request such as dataxml<-anyXmlParse(url).
+#' XML response from a anyXmlParse(url) request such as xmldata<-anyXmlParse(url).
 #' Returns a dataframe of the data for each timestamp. Handles missing results and
 #' doesn't require prior knowledge of parameter names. Handles true measurements
 #' and WQ Sample requests.
+#' @inheritParams is.hilltopXml
+#' @return A dataframe of data for each timestep.
 #' @export
 #' @importFrom XML getNodeSet xpathApply xmlValue
 #' @importFrom reshape2 dcast
-hilltopMeasurementToDF <- function(dataxml) {
-  idNodes <- XML::getNodeSet(dataxml, "//Measurement/Data/E")
+hilltopMeasurementToDF <- function(xmldata) {
+  idNodes <- XML::getNodeSet(xmldata, "//Measurement/Data/E")
   Times <- base::lapply(idNodes, XML::xpathApply, path = "./T", XML::xmlValue)
   values <- base::lapply(idNodes, XML::xpathApply, path = "./*", hilltopValueHelper)
   attributes <- base::lapply(idNodes, XML::xpathApply, path = "./*", hilltopAttributeHelper)
@@ -27,13 +29,15 @@ hilltopMeasurementToDF <- function(dataxml) {
 #'
 #' Helper function that reads the nodes within a the DataSource ItemInfo node of a
 #' Hilltop XML response from a anyXmlParse(url) request such as
-#' dataxml<-anyXmlParse(url). Returns a dataframe of the Info for each Item.
+#' xmldata<-anyXmlParse(url). Returns a dataframe of the Info for each Item.
 #' Handles missing results and doen't require prior knowledge of the items.
+#' @inheritParams is.hilltopXml
+#' @return A dataframe of the Hilltop datasource information.
 #' @export
 #' @importFrom XML getNodeSet xpathApply xmlValue
 #' @importFrom reshape2 dcast
-hilltopDataSourceToDF<-function(dataxml) {
-  idNodes <- XML::getNodeSet(dataxml, "//Measurement/DataSource")
+hilltopDataSourceToDF<-function(xmldata) {
+  idNodes <- XML::getNodeSet(xmldata, "//Measurement/DataSource")
   Item <- base::lapply(idNodes, XML::xpathApply, path = "./ItemInfo", XML::xmlGetAttr, "ItemNumber")
   values <- base::lapply(idNodes, XML::xpathApply, path = "./ItemInfo/*", hilltopValueHelper)
   attributes <- base::lapply(idNodes, XML::xpathApply, path = "./ItemInfo/*", hilltopAttributeHelper)
@@ -48,18 +52,23 @@ hilltopDataSourceToDF<-function(dataxml) {
 #' Hilltop Measurement Request As A Data Frame.
 #'
 #' Main function that converts a Hilltop XML document from a anyXmlParse(url)
-#' request such as dataxml<-anyXmlParse(url) for a water quality measurement into
-#' a dataframe that contains the measurement information. It returns a dataframe
-#' of the data for each timestamp, including DataSource Information and the Site
-#' Name. This dataframe can be merged with a WQ Sample dataframe processed using
-#' hilltopMeasurementToDF
+#' request such as xmldata<-anyXmlParse(url) for a water quality measurement
+#' into a dataframe that contains the measurement information. It returns a
+#' dataframe of the data for each timestamp, including DataSource Information
+#' and the Site Name. Combines the results of the
+#' hilltopMeasurementToDF(xmldata) and hilltopDataSourceToDF(xmldata) functions.
+#' This dataframe can be merged with a WQ Sample dataframe processed using
+#' hilltopMeasurementToDF.
+#' @inheritParams is.hilltopXml
+#' @return A dataframe of measurement data and metadata from the Hilltop
+#'   datasource.
 #' @export
-hilltopMeasurement<-function(dataxml){
+hilltopMeasurement<-function(xmldata){
 
-  Site <- dataxml[["string(//Measurement/@SiteName)"]]
-  df <- hilltopMeasurementToDF(dataxml)
+  Site <- xmldata[["string(//Measurement/@SiteName)"]]
+  df <- hilltopMeasurementToDF(xmldata)
   df$Site <- Site
-  items <- hilltopDataSourceToDF(dataxml)
+  items <- hilltopDataSourceToDF(xmldata)
   df$Measurement <- items$ItemName
   df$Units <- if(base::is.null(items$Units)) {c("")} else {items$Units}
   return(df)
