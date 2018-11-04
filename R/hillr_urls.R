@@ -8,12 +8,9 @@
 #' @return A Hilltop url request.
 #' @export
 buildSiteListUrl <- function(endpoint) {
-  # check whether a '?' is the last charachter of the endpoint, if not add one.
-  endpoint <- fixEndpoint(endpoint)
-  # check that the endpoint is valid.
-  if(!is.validEndpoint(endpoint)) {
-    stop("Invalid endpoint provided.")
-  }
+  # check whether a '?' is the last charachter of the endpoint, if not add one
+  # and check that the endpoint is valid.
+  endpoint <- checkFixEndpoint(endpoint)
   # set the service as 'Hilltop'
   service <- "Hilltop"
   # set the request as 'SiteList'
