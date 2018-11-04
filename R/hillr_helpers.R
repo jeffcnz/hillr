@@ -80,3 +80,50 @@ period <- function(xmldata) {
       return("Month")}
 }
 
+#' Return the last n charachters from a string.
+#'
+#' Helper function to return the last n charachters of a string.
+#' @param string The string that the substring is to be extracted from.
+#' @param n The number of charachters from the end of the string to return.
+#' @return A string that is the last n charachters from string.
+stringEnd <- function(string, n){
+  lenStr <- nchar(string)
+  substr(string, lenStr-n+1, lenStr)
+}
+
+#' Makes sure that an endpoint ends in a "?"
+#'
+#' Helper function to ensure that a Hilltop endpoint ends in a "?".
+#' @param endpoint A valid hilltop endpoint.
+#' @return A version of the provided string that ends in a "?"
+fixEndpoint <- function(endpoint) {
+  #Check whether the last charachter is a ?
+  if(stringEnd(endpoint,1) != "?") {
+    #If the string doesn't end in a ? then add one and return the result.
+    return(paste0(endpoint, "?"))
+  } else {
+    #If the string ends in a ? then return the string unchanged.
+      return(endpoint)
+    }
+}
+
+#' Checks that a Hilltop endpoint is valid.
+#'
+#' Helper function to check if a provided endpoint is a valid Hilltop endpoint.
+#' Currelntly limited to checking that the first 4 characters are http and the
+#' last are.hts?.
+#' @inheritParams fixEndpoint
+#' @return Logical TRUE / FALSE
+is.validEndpoint <- function(endpoint) {
+  #Does the endpoint string start with http.
+  if(substr(endpoint, 0, 4) == "http") {
+    #Does the endpoint string end with .hts?
+    if(stringEnd(endpoint, 5) == ".hts?") {
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }
+  } else {
+    return(FALSE)
+  }
+}
