@@ -18,7 +18,7 @@ Takes an xml document from a Hilltop MeasurementList at a Site request.
 Returns a dataframe of the measurement information and datasource info.
 
 Old Function To Get Data SOurce And Measurement Information.
-Old Function To Get Data SOurce And Measurement Information.
+Old Function To Get Data Source And Measurement Information.
 Helper function.
 Takes an xml document from a Hilltop MeasurementList at a Site request.
 Returns a dataframe of the measurement information and datasource info.

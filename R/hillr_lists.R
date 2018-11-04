@@ -2,6 +2,9 @@
 #'
 #' Takes an parsed xml document from a Hilltop SiteList request.
 #' Returns a dataframe of the available sites and location if available.
+#' @export
+#' @importFrom XML xpathApply xmlName xmlGetAttr xmlChildren xpathSApply xmlValue
+#' @importFrom reshape2 dcast
 hilltopSiteList <- function(sitexml) {
   stemp <- base::do.call(base::rbind, XML::xpathApply(sitexml, "/HilltopServer/Site", function(node) {
     xp <- "./*"
@@ -27,6 +30,9 @@ hilltopSiteList <- function(sitexml) {
 #' Helper function.
 #' Takes an xml document from a Hilltop MeasurementList at a Site request.
 #' Returns a dataframe of the datasource information and measurements names.
+#' @export
+#' @importFrom XML xpathApply xmlName xmlGetAttr xpathSApply xmlValue
+#' @importFrom reshape2 dcast
 hilltopDsMeasList <- function(measlistxml) {
   dstemp <- base::do.call(base::rbind, XML::xpathApply(measlistxml, "/HilltopServer/DataSource", function(node) {
     xp <- "./*"
@@ -54,6 +60,9 @@ hilltopDsMeasList <- function(measlistxml) {
 #' Helper function.
 #' Takes an xml document from a Hilltop MeasurementList at a Site request.
 #' Returns a dataframe of the measurement information and datasources.
+#' @export
+#' @importFrom XML xpathApply xmlName xmlGetAttr xpathSApply xmlValue
+#' @importFrom reshape2 dcast
 hilltopMeasInfoList <- function(measlistxml) {
   dstemp <- base::do.call(base::rbind, XML::xpathApply(measlistxml, "/HilltopServer/DataSource/Measurement", function(node) {
     xp <- "./*"
@@ -75,6 +84,7 @@ hilltopMeasInfoList <- function(measlistxml) {
 #' Takes an xml document from a Hilltop MeasurementList at a Site request.
 #' Returns a dataframe of all of the datasource and measurement information
 #' combined.
+#' @export
 hilltopDsMeasListFull <- function(measlistxml) {
   t <- hilltopDsMeasList(measlistxml)
   m <- hilltopMeasInfoList(measlistxml)
@@ -86,6 +96,9 @@ hilltopDsMeasListFull <- function(measlistxml) {
 #' Helper function.
 #' Takes an xml document from a Hilltop MeasurementList at a Site request.
 #' Returns a dataframe of the measurement information and datasource info.
+#' @export
+#' @importFrom XML xpathApply xmlName xmlGetAttr xpathSApply xmlValue
+#' @importFrom reshape2 dcast
 hilltopMeasInfoListExtra <- function(measlistxml) {
   dstemp <- base::do.call(rbind, XML::xpathApply(measlistxml, "/HilltopServer/DataSource/Measurement", function(node) {
     xp <- "./*"
@@ -109,6 +122,9 @@ hilltopMeasInfoListExtra <- function(measlistxml) {
 #'
 #' Takes an parsed xml document from a Hilltop SiteList request.
 #' Returns a dataframe of the available sites and location if available.
+#' @export
+#' @importFrom XML xpathApply xmlName xmlGetAttr xmlChildren xpathSApply xmlValue
+#' @importFrom reshape2 dcast
 hilltopSiteList <- function(sitexml) {
   stemp <- base::do.call(base::rbind, XML::xpathApply(sitexml, "/HilltopServer/Site", function(node) {
     xp <- "./*"
@@ -134,6 +150,9 @@ hilltopSiteList <- function(sitexml) {
 #' Helper function.
 #' Takes an xml document from a Hilltop MeasurementList at a Site request.
 #' Returns a dataframe of the datasource information and measurements names.
+#' @export
+#' @importFrom XML xpathApply xmlName xmlGetAttr xpathSApply xmlValue
+#' @importFrom reshape2 dcast
 hilltopDsMeasList <- function(measlistxml) {
   dstemp <- base::do.call(base::rbind, XML::xpathApply(measlistxml, "/HilltopServer/DataSource", function(node) {
     xp <- "./*"
@@ -161,6 +180,9 @@ hilltopDsMeasList <- function(measlistxml) {
 #' Helper function.
 #' Takes an xml document from a Hilltop MeasurementList at a Site request.
 #' Returns a dataframe of the measurement information and datasources.
+#' @export
+#' @importFrom XML xpathApply xmlName xmlGetAttr xpathSApply xmlValue
+#' @importFrom reshape2 dcast
 hilltopMeasInfoList <- function(measlistxml) {
   dstemp <- base::do.call(base::rbind, XML::xpathApply(measlistxml, "/HilltopServer/DataSource/Measurement", function(node) {
     xp <- "./*"
@@ -182,6 +204,7 @@ hilltopMeasInfoList <- function(measlistxml) {
 #' Takes an xml document from a Hilltop MeasurementList at a Site request.
 #' Returns a dataframe of all of the datasource and measurement information
 #' combined.
+#' @export
 hilltopDsMeasListFull <- function(measlistxml) {
   t <- hilltopDsMeasList(measlistxml)
   m <- hilltopMeasInfoList(measlistxml)
@@ -190,10 +213,13 @@ hilltopDsMeasListFull <- function(measlistxml) {
 }
 
 #' Old Function To Get Data SOurce And Measurement Information.
-#' Old Function To Get Data SOurce And Measurement Information.
+#' Old Function To Get Data Source And Measurement Information.
 #' Helper function.
 #' Takes an xml document from a Hilltop MeasurementList at a Site request.
 #' Returns a dataframe of the measurement information and datasource info.
+
+#' @importFrom XML xpathApply xmlName xmlGetAttr xpathSApply xmlValue
+#' @importFrom reshape2 dcast
 hilltopMeasInfoListExtra <- function(measlistxml) {
   dstemp <- base::do.call(base::rbind, XML::xpathApply(measlistxml, "/HilltopServer/DataSource/Measurement", function(node) {
     xp <- "./*"

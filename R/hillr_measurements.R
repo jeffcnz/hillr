@@ -5,6 +5,9 @@
 #' Returns a dataframe of the data for each timestamp. Handles missing results and
 #' doesn't require prior knowledge of parameter names. Handles true measurements
 #' and WQ Sample requests.
+#' @export
+#' @importFrom XML getNodeSet xpathApply xmlValue
+#' @importFrom reshape2 dcast
 hilltopMeasurementToDF <- function(dataxml) {
   idNodes <- XML::getNodeSet(dataxml, "//Measurement/Data/E")
   Times <- base::lapply(idNodes, XML::xpathApply, path = "./T", XML::xmlValue)
@@ -26,6 +29,9 @@ hilltopMeasurementToDF <- function(dataxml) {
 #' Hilltop XML response from a anyXmlParse(url) request such as
 #' dataxml<-anyXmlParse(url). Returns a dataframe of the Info for each Item.
 #' Handles missing results and doen't require prior knowledge of the items.
+#' @export
+#' @importFrom XML getNodeSet xpathApply xmlValue
+#' @importFrom reshape2 dcast
 hilltopDataSourceToDF<-function(dataxml) {
   idNodes <- XML::getNodeSet(dataxml, "//Measurement/DataSource")
   Item <- base::lapply(idNodes, XML::xpathApply, path = "./ItemInfo", XML::xmlGetAttr, "ItemNumber")
@@ -47,6 +53,7 @@ hilltopDataSourceToDF<-function(dataxml) {
 #' of the data for each timestamp, including DataSource Information and the Site
 #' Name. This dataframe can be merged with a WQ Sample dataframe processed using
 #' hilltopMeasurementToDF
+#' @export
 hilltopMeasurement<-function(dataxml){
 
   Site <- dataxml[["string(//Measurement/@SiteName)"]]

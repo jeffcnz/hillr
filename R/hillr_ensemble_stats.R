@@ -3,6 +3,8 @@
 #' Helper Function that takes the parsed xml from an Ensemble Statistics request.
 #' Returns a single line dataframe of the Statistics background information This
 #' needs to be combined with the stats themselves to get a full dataframe.
+#' @export
+#' @importFrom XML xpathApply xpathSApply xmlName xmlGetAttr xmlValue
 hilltopEnsembleStatBkgnd <- function(dataxml){
   bgtemp <- base::do.call(base::rbind, XML::xpathApply(dataxml, "/HilltopServer", function(node) {
     xp <- "./*"
@@ -24,6 +26,8 @@ hilltopEnsembleStatBkgnd <- function(dataxml){
 #' Helper function that takes parsed xml from an EnsembleStats Request. Returns
 #' the statistics for each time period (depending whether hourly, monthly or
 #' annual stats).
+#' @export
+#' @importFrom XML xpathApply xpathSApply xmlName xmlGetAttr xmlValue
 hilltopEnsembleStatByTimePeriod <- function(dataxml){
   estatperiod <- period(dataxml)
 
@@ -49,6 +53,7 @@ hilltopEnsembleStatByTimePeriod <- function(dataxml){
 #' Takes the parsed xml from an EnsembleStats Request. Returns a dataframe of the
 #' statistics for the period, along with the background information such as site
 #' measurement units etc.
+#' @export
 hilltopEnsembleStatFull <- function(dataxml) {
   bg <- hilltopEnsembleStatBkgnd(dataxml)
   pe <- hilltopEnsembleStatByTimePeriod(dataxml)
