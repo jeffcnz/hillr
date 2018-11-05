@@ -28,7 +28,7 @@ buildSiteListUrl <- function(endpoint) {
 #' Takes a valid Hilltop server endpoint and a site name and returns a url that
 #' requests the measurement list for that site from the endpoint.
 #' @inheritParams fixEndpoint
-#' @param string A site that has data available on the server.
+#' @param site string A site that has data available on the server.
 #' @return string A Hilltop url request for a measurement list for the site.
 #' @export
 buildMeasurementListUrl <- function(endpoint, site) {

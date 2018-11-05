@@ -7,10 +7,10 @@
 buildSiteListUrl(endpoint)
 }
 \arguments{
-\item{endpoint}{A valid hilltop endpoint.}
+\item{endpoint}{string A valid hilltop endpoint.}
 }
 \value{
-A Hilltop url request.
+string A Hilltop url request for a site list.
 }
 \description{
 Takes a valid Hilltop server endpoint and returns a url that requests the
