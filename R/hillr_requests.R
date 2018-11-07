@@ -7,13 +7,13 @@
 #' statistics can be obtained, to request these a method, interval and
 #' allignment argument need to be provided.
 
-#' @inheritParams buildDataRequesttUrl
+#' @inheritParams buildDataRequestUrl
 #' @return dataframe A dataframe of the timeseries data.
 #' @export
 
 getHilltopData <- function(endpoint, site, measurement, from, to, timeInterval, tsType, alignment, method, interval) {
   # Build the url.
-  tempUrl <- buildDataRequesttUrl(endpoint = endpoint,
+  dataUrl <- buildDataRequestUrl(endpoint = endpoint,
                                   site = site,
                                   measurement = measurement,
                                   from = from,
@@ -24,11 +24,52 @@ getHilltopData <- function(endpoint, site, measurement, from, to, timeInterval, 
                                   method = method,
                                   interval = interval)
   # Parse the XML
-  tempXml <- anyXmlParse(tempUrl)
+  dataXml <- anyXmlParse(tempUrl)
   # Request the data
-  tempDf <- hilltopMeasurement(tempXml)
+  dataDf <- hilltopMeasurement(tempXml)
   # Return the data
-  return(tempDf)
+  return(dataDf)
 }
 
+#' General funtion to get a site list from a Hilltop server.
+#'
+#' Takes a valid hilltop endpoint, and returns a list of available sites
+#' available from the endpoint.
+#'
+#' @inheritParams buildSiteListUrl
+#'
+#' @return A dataframe of site names
+#'
+#' @export
+getHilltopSites <- function(endpoint) {
+  # Build the url.
+  sitesUrl <- buildSiteListUrl(endpoint = endpoint)
+  # Parse the XML
+  sitesXml <- anyXmlParse(sitesUrl)
+  # Request the data
+  sitesDf <- hilltopSiteList(tempXml)
+  # Return the data
+  return(sitesDf)
+}
 
+#' General funtion to get a measuremnt list for a site from a Hilltop server.
+#'
+#' Takes a valid hilltop endpoint and site, and returns a list of available measurements
+#' available from the endpoint.
+#'
+#' @inheritParams buildMeasurementListUrl
+#'
+#' @return A dataframe of measurements and associated metadata
+#'
+#' @export
+getHilltopMeasurements <- function(endpoint, site) {
+  # Build the url.
+  measurementsUrl <- buildMeasurementListUrl(endpoint = endpoint,
+                                      site = site)
+  # Parse the XML
+  measurementsXml <- anyXmlParse(measurementsUrl)
+  # Request the data
+  measurementsDf <- hilltopDsMeasListFull(measurementsXml)
+  # Return the data
+  return(measurementsDf)
+}
