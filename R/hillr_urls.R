@@ -52,11 +52,11 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #' Server.
 #'
 #' Takes a valid Hilltop server endpoint, a site name, a measurement name  and
-#' optional from and to arguments and an optional timeseries type argument and
-#' returns a url that requests the data for that site and measurement for the
-#' requested time range from the endpoint. For standard time series, statistics
-#' can be requested, to request these a method, interval and allignment argument
-#' need to be provided.
+#' optional from, to or timeIntervaland arguments, an optional timeseries type
+#' argument and returns a url that requests the data for that site and
+#' measurement for the requested time range from the endpoint. For standard time
+#' series, statistics can be requested, to request these a method, interval and
+#' allignment argument need to be provided.
 #' @inheritParams fixEndpoint
 #' @inheritParams buildMeasurementListUrl
 #' @param measurement string A measurement that has data available for the
@@ -86,7 +86,7 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #'   the time period for the site.
 #'
 #' @export
-buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, tsType, alignment, method, interval) {
+buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, timeInterval, tsType, alignment, method, interval) {
   # check whether a '?' is the last charachter of the endpoint, if not add one
   # and check that the endpoint is valid.
   endpoint <- checkFixEndpoint(endpoint)
@@ -110,7 +110,7 @@ buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, tsType, 
   } else {
     #TO DO - Check that the date format is acceptable.
     #build the from key value pair
-    fromStr <- paste0("&From=", from)
+    fromStr <- base::paste0("&From=", from)
   }
 
   #Check whether a to date has been provided in the correct format and create an appropriate request string.
@@ -121,7 +121,18 @@ buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, tsType, 
     #TO DO - Check that the date format is acceptable.
     #TO DO - Check that the to date is after the from date.
     #build the to key value pair
-    toStr <- paste0("&To=", to)
+    toStr <- base::paste0("&To=", to)
+  }
+
+  #Check whether a timeInterval date has been provided in the correct format and create an appropriate request string.
+  if(missing(timeInterval)) {
+    #Omit the from key value pair from the request.
+    timeIntStr <- ""
+  } else {
+    #TO DO - Check that the date format is acceptable.
+    #TO DO - Check that the to date is after the from date.
+    #build the to key value pair
+    timeIntStr <- base::paste0("&TimeInterval=", timeInterval)
   }
 
   #Check whether a tsType has been provided in the correct format and create an appropriate request string.
@@ -133,7 +144,7 @@ buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, tsType, 
     allowedTsTypes <- c("StdTimeSeries", "StdQualSeries")
     if(tsType %in% allowedTsTypes) {
       #build the tsType key value pair
-      tsStr <- paste0("&tsType=", tsType)
+      tsStr <- base::paste0("&tsType=", tsType)
     } else {
       #Exit and indicate why the error occurred.
       stop(paste("Invalid tsType provided.  Allowed values are ", paste(allowedTsTypes, collapse = ", "),"."))
@@ -146,7 +157,7 @@ buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, tsType, 
     alignmentStr <- ""
   } else {
     #TO DO - Check that the alignment matches allowed values.
-    alignmentStr <- paste0("&Alignment=", alignment)
+    alignmentStr <- base::paste0("&Alignment=", alignment)
   }
 
   #Check whether a valid method has been provided and create an appropriate request string.
@@ -161,7 +172,7 @@ buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, tsType, 
       methodStr <- paste0("&Method=", method)
     } else {
       #Exit and indicate why the error occurred.
-      stop(paste("Invalid method provided.  Allowed values are ", paste(allowedMethods, collapse = ", "),"."))
+      stop(base::paste("Invalid method provided.  Allowed values are ", paste(allowedMethods, collapse = ", "),"."))
     }
   }
 
@@ -171,7 +182,7 @@ buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, tsType, 
     intervalStr <- ""
   } else {
     #TO DO - Check that the interval matches allowed values.
-    intervalStr <- paste0("&Interval=", interval)
+    intervalStr <- base::paste0("&Interval=", interval)
   }
 
   # build the url
@@ -183,6 +194,7 @@ buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, tsType, 
                           fromStr,
                           toStr,
                           tsStr,
+                          timeIntStr
                           alignmentStr,
                           methodStr,
                           intervalStr)
