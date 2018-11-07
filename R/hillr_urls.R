@@ -67,6 +67,8 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #' @param to string (optional) The date (or date time combination) that data is
 #'   required up to (if not provided data will be provided from the from date to
 #'   the most recent data available.)
+#' @param timeInterval string (optional) A time interval that data is requested
+#'   over, either of the form P1D, or P3M, or fromDateTime/toDateTime.
 #' @param tsType string (optional) The type of time series being requested.
 #'   Default is StdTimeSeries, but quality code data can be obtained using
 #'   tsType = StdQualSeries.
@@ -194,7 +196,7 @@ buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, timeInte
                           fromStr,
                           toStr,
                           tsStr,
-                          timeIntStr
+                          timeIntStr,
                           alignmentStr,
                           methodStr,
                           intervalStr)
