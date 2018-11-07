@@ -88,7 +88,7 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #'   the time period for the site.
 #'
 #' @export
-buildDataRequesttUrl <- function(endpoint, site, measurement, from, to, timeInterval, tsType, alignment, method, interval) {
+buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInterval, tsType, alignment, method, interval) {
   # check whether a '?' is the last charachter of the endpoint, if not add one
   # and check that the endpoint is valid.
   endpoint <- checkFixEndpoint(endpoint)
