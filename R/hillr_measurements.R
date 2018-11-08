@@ -79,7 +79,13 @@ hilltopMeasurement<-function(xmldata){
   df$Site <- Site
   items <- hilltopDataSourceToDF(xmldata)
   df$Measurement <- items$ItemName
-  df$Units <- if(base::is.null(items$Units)) {c("")} else {items$Units}
+  df$Units <- if("Units" %in% base::names(items)){
+    #If a Units field is in the items dataframe then use it.
+    if(base::is.null(items$Units)) {c("")} else {items$Units}
+  } else {
+    #Leave the units blank
+    ""
+  }
   return(df)
 }
 
