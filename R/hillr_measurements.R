@@ -45,7 +45,16 @@ hilltopDataSourceToDF<-function(xmldata) {
   data$Item <- base::unlist(Item)
   data <- data[!(data$Attribute == "NULL"), ]
   data <- base::data.frame(base::lapply(data, base::as.character), stringsAsFactors = FALSE)
-  cdata <- reshape2::dcast(data, Item ~ Attribute, value.var = "Content")
+  cdata <- if(base::length(data) > 0) {
+    #If there is metadata then create a dataframe of it that can be associated
+    #with the measurements
+    reshape2::dcast(data, Item ~ Attribute, value.var = "Content")
+  } else {
+    #Extract the measurement name from the xml and return this in a dataframe
+    #that can be associated with the measuremnts.
+    itemName <- dataxml[["string(//DataSource/@Name)"]]
+    base::data.frame(ItemName = itemName)
+  }
   return(cdata)
 }
 
