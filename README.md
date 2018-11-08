@@ -6,19 +6,33 @@ A R package for interacting with a Hilltop time series server.
 
 In R make sure that you have devtools installed.
 Remove any preinstalled versions of hillr, then run
-'''
+
+```R
 devtools::install_github("jeffcnz/hillr")
-'''
+```
+
+To get a list of sites available from the endpoint
+
+```R
+sites <- getHilltopSites(endpoint = "http://data.hbrc.govt.nz/Envirodata/EMAR.hts?")
+```
+
+To get a list of measurements at a site
+
+```R
+measurements <- getHilltopMeasurements(endpoint = "http://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
+                                                   site = "Maraetotara Lagoon")
+```
 
 To get some data for a site you'll need to know the Hilltop server endpoint, site name, and measurement
 
-'''
-test <- getHilltopData(endpoint = "http://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
+```R
+eColi <- getHilltopData(endpoint = "http://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
                        site = "Maraetotara Lagoon",
                        measurement = "E. Coli",
                        from = "1/1/2018",
                        to = "1/10/2018")
-'''
+```
 
 ## Replaces
 
