@@ -1,8 +1,13 @@
 #' Makes sure that an endpoint ends in a "?"
 #'
+#' \code{fixEndpoint} returns a string with a ? at the end
+#'
 #' Helper function to ensure that a Hilltop endpoint ends in a "?".
+#'
 #' @param endpoint string A valid hilltop endpoint.
+#'
 #' @return A version of the provided string that ends in a "?"
+#'
 fixEndpoint <- function(endpoint) {
   #Check whether the last charachter is a ?
   if(stringEnd(endpoint,1) != "?") {
@@ -16,11 +21,16 @@ fixEndpoint <- function(endpoint) {
 
 #' Checks that a Hilltop endpoint is valid.
 #'
+#' \code{is.validEndpoint} returns a logical value
+#'
 #' Helper function to check if a provided endpoint is a valid Hilltop endpoint.
 #' Currelntly limited to checking that the first 4 characters are http and the
 #' last are.hts?.
+#'
 #' @inheritParams fixEndpoint
+#'
 #' @return Logical TRUE / FALSE
+#'
 is.validEndpoint <- function(endpoint) {
   #Does the endpoint string start with http.
   if(substr(endpoint, 0, 4) == "http") {
@@ -37,9 +47,14 @@ is.validEndpoint <- function(endpoint) {
 
 #' Checks and fixes a Hiltop endpoint.
 #'
+#' \code{checkFixEndpoint} returns a valid endpoint string.
+#'
 #' Helper function to check and fix a Hilltop endpoint string.
+#'
 #' @inheritParams fixEndpoint
+#'
 #' @return A valid Hilltop endpoint.
+#'
 checkFixEndpoint <- function(endpoint) {
   #First make sure the endpoint ends in a ?
   endpoint <- fixEndpoint(endpoint)
