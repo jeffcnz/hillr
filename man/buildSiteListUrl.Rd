@@ -13,6 +13,9 @@ buildSiteListUrl(endpoint)
 string A Hilltop url request for a site list.
 }
 \description{
+\code{buildSiteListUrl} returns a url to request a site list
+}
+\details{
 Takes a valid Hilltop server endpoint and returns a url that requests the
 site list from the endpoint.
 }

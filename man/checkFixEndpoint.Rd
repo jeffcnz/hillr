@@ -13,5 +13,8 @@ checkFixEndpoint(endpoint)
 A valid Hilltop endpoint.
 }
 \description{
+\code{checkFixEndpoint} returns a valid endpoint string.
+}
+\details{
 Helper function to check and fix a Hilltop endpoint string.
 }

@@ -13,6 +13,9 @@ is.validEndpoint(endpoint)
 Logical TRUE / FALSE
 }
 \description{
+\code{is.validEndpoint} returns a logical value
+}
+\details{
 Helper function to check if a provided endpoint is a valid Hilltop endpoint.
 Currelntly limited to checking that the first 4 characters are http and the
 last are.hts?.

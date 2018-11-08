@@ -13,5 +13,5 @@ is.hilltopXml(xmldata)
 logical TRUE / FALSE
 }
 \description{
-Checks if an xml document is hilltop xml, returns True or False accordingly.
+\code{is.hilltopXml} Checks if an xml document is hilltop xml, returns True or False accordingly.
 }

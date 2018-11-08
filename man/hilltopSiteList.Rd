@@ -13,6 +13,9 @@ hilltopSiteList(xmldata)
 A dataframe of available sites (with locations if available).
 }
 \description{
-Takes an parsed xml document from a Hilltop SiteList request.
-Returns a dataframe of the available sites and location if available.
+\code{hilltopSiteList} returns a dataframe of sites
+}
+\details{
+Takes an parsed xml document from a Hilltop SiteList request. Returns a
+dataframe of the available sites and location if available.
 }

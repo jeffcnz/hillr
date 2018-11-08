@@ -13,6 +13,9 @@ hilltopDataSourceToDF(xmldata)
 A dataframe of the Hilltop datasource information.
 }
 \description{
+\code{hilltopDataSourceToDF} returns measurement metadata
+}
+\details{
 Helper function that reads the nodes within a the DataSource ItemInfo node of a
 Hilltop XML response from a anyXmlParse(url) request such as
 xmldata<-anyXmlParse(url). Returns a dataframe of the Info for each Item.

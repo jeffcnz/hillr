@@ -13,6 +13,9 @@ getHilltopSites(endpoint)
 A dataframe of site names
 }
 \description{
+\code{getHilltopSites} returns a list of sites.
+}
+\details{
 Takes a valid hilltop endpoint, and returns a list of available sites
 available from the endpoint.
 }

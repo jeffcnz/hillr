@@ -15,6 +15,9 @@ buildMeasurementListUrl(endpoint, site)
 string A Hilltop url request for a measurement list for the site.
 }
 \description{
+\code{buildMeasurementListUrl} returns a url to request a measuremnt list for a site.
+}
+\details{
 Takes a valid Hilltop server endpoint and a site name and returns a url that
 requests the measurement list for that site from the endpoint.
 }

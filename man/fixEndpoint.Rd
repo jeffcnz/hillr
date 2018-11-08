@@ -13,5 +13,8 @@ fixEndpoint(endpoint)
 A version of the provided string that ends in a "?"
 }
 \description{
+\code{fixEndpoint} returns a string with a ? at the end
+}
+\details{
 Helper function to ensure that a Hilltop endpoint ends in a "?".
 }

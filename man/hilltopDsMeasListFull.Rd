@@ -10,9 +10,13 @@ hilltopDsMeasListFull(xmldata)
 \item{xmldata}{An XML document, returned from a url request using anyXmlParse.}
 }
 \value{
-A dataframe of datasources and measurments at a site with all available datasource and measurement information.
+A dataframe of datasources and measurments at a site with all
+  available datasource and measurement information.
 }
 \description{
+\code{hilltopDsMeasListFull} returns all datasource and measurement info.
+}
+\details{
 Takes an xml document from a Hilltop MeasurementList at a Site request.
 Returns a dataframe of all of the datasource and measurement information
 combined.

@@ -14,6 +14,9 @@ A dataframe of measurement data and metadata from the Hilltop
   datasource.
 }
 \description{
+\code{hilltopMeasurement} returns a timeseries with measurement metadata.
+}
+\details{
 Main function that converts a Hilltop XML document from a anyXmlParse(url)
 request such as xmldata<-anyXmlParse(url) for a water quality measurement
 into a dataframe that contains the measurement information. It returns a

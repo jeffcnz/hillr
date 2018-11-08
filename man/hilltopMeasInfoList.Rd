@@ -13,6 +13,9 @@ hilltopMeasInfoList(xmldata)
 A dataframe of measurement information and associated datasources.
 }
 \description{
+\code{hilltopMeasInfoList} helper function for measurement metadata.
+}
+\details{
 Helper function.
 Takes an xml document from a Hilltop MeasurementList at a Site request.
 Returns a dataframe of the measurement information and datasources.

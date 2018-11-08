@@ -2,13 +2,7 @@
 % Please edit documentation in R/hillr_requests.R
 \name{getHilltopData}
 \alias{getHilltopData}
-\title{General function to get timeseries data from a Hilltop server.
-Takes a valid Hilltop server endpoint, a site name, a measurement name  and
-optional from, to or timeIntervaland arguments, an optional timeseries type
-argument and returns a dataframe of the data for that site and measurement
-for the requested time range from the endpoint. For standard time series,
-statistics can be obtained, to request these a method, interval and
-allignment argument need to be provided.}
+\title{General function to get timeseries data from a Hilltop server.}
 \usage{
 getHilltopData(endpoint, site, measurement, from, to, timeInterval, tsType,
   alignment, method, interval)
@@ -54,7 +48,9 @@ computed over.}
 dataframe A dataframe of the timeseries data.
 }
 \description{
-General function to get timeseries data from a Hilltop server.
+\code{getHilltopData} retrieves time series data from a Hilltop server.
+}
+\details{
 Takes a valid Hilltop server endpoint, a site name, a measurement name  and
 optional from, to or timeIntervaland arguments, an optional timeseries type
 argument and returns a dataframe of the data for that site and measurement

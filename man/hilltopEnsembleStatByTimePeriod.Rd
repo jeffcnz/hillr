@@ -13,6 +13,9 @@ hilltopEnsembleStatByTimePeriod(xmldata)
 A dataframe of the of the summary statistics for each time period.
 }
 \description{
+\code{hilltopEnsembleStatsByTimePeriod} return stats for each time period.
+}
+\details{
 Helper function that takes parsed xml from an EnsembleStats Request. Returns
 the statistics for each time period (depending whether hourly, monthly or
 annual stats).

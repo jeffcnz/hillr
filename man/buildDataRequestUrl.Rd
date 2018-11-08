@@ -2,8 +2,7 @@
 % Please edit documentation in R/hillr_urls.R
 \name{buildDataRequestUrl}
 \alias{buildDataRequestUrl}
-\title{Create a url to request data for a site and measurement from a Hilltop
-Server.}
+\title{Create a url to request data for a site and measurement.}
 \usage{
 buildDataRequestUrl(endpoint, site, measurement, from, to, timeInterval,
   tsType, alignment, method, interval)
@@ -50,6 +49,9 @@ string A Hilltop url request for data for the site and measurement in
   the time period for the site.
 }
 \description{
+\code{buildDataRequestUrl} returns a url to request data for a site and measurement
+}
+\details{
 Takes a valid Hilltop server endpoint, a site name, a measurement name  and
 optional from, to or timeIntervaland arguments, an optional timeseries type
 argument and returns a url that requests the data for that site and

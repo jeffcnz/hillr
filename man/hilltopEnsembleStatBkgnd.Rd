@@ -13,6 +13,9 @@ hilltopEnsembleStatBkgnd(xmldata)
 A single line dataframe of the statistics background information.
 }
 \description{
+\code{hilltopEnsembleStatBackground} returns background stats information
+}
+\details{
 Helper Function that takes the parsed xml from an Ensemble Statistics request.
 Returns a single line dataframe of the Statistics background information This
 needs to be combined with the stats themselves to get a full dataframe.

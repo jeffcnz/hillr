@@ -13,6 +13,9 @@ hilltopEnsembleStatFull(xmldata)
 A dataframe of the ensemble statistics along with the background metadata.
 }
 \description{
+\code{hilltopEnsembleStatFull} returns full dataframe of ensemble stats
+}
+\details{
 Takes the parsed xml from an EnsembleStats Request. Returns a dataframe of the
 statistics for the period, along with the background information such as site
 measurement units etc.

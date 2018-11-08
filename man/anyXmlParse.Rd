@@ -13,6 +13,9 @@ anyXmlParse(url)
 A parsed XML document
 }
 \description{
+\code{anyXmlParse} parses Hilltop XML from http or https requests.
+}
+\details{
 Helper function to parse data from a hilltop server. Takes a valid url as an
 input and returns a parsed xml document ready for other functions. Uses
 xmlParse from the XML library, but enables https requests to be processed as

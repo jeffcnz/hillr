@@ -15,6 +15,9 @@ getHilltopMeasurements(endpoint, site)
 A dataframe of measurements and associated metadata
 }
 \description{
+\code{getHilltopMeasurements} returns the available measurements at a site.
+}
+\details{
 Takes a valid hilltop endpoint and site, and returns a list of available measurements
 available from the endpoint.
 }

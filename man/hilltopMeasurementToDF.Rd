@@ -13,6 +13,9 @@ hilltopMeasurementToDF(xmldata)
 A dataframe of data for each timestep.
 }
 \description{
+\code{hilltopMeasurementToDF} returns a timeseries dataframe of measurements
+}
+\details{
 Helper function that reads the nodes within a the Measurement node of a Hilltop
 XML response from a anyXmlParse(url) request such as xmldata<-anyXmlParse(url).
 Returns a dataframe of the data for each timestamp. Handles missing results and

@@ -13,5 +13,5 @@ period(xmldata)
 A string describing a time period.  Possible values are "Hour", "Day", or "Month".
 }
 \description{
-Helper function to determine what the measurement period of the EnsembleStats is.
+\code{period} Determine what the measurement period of the Ensemble Statistics is.
 }

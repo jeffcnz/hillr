@@ -13,6 +13,9 @@ hilltopValueHelper(xmlNode)
 The value of the attribute described by the XML node.
 }
 \description{
+\code{hilltopValueHelper} returns the value of parameters or nodes.
+}
+\details{
 Helper function to return the appropriate xml value depending whether the value
 of interest is from a named node, or is a named parameter.
 }

@@ -7,13 +7,13 @@
 stringEnd(string, n)
 }
 \arguments{
-\item{string}{The string that the substring is to be extracted from.}
+\item{string}{string The string that the substring is to be extracted from.}
 
-\item{n}{The number of charachters from the end of the string to return.}
+\item{n}{integer The number of charachters from the end of the string to return.}
 }
 \value{
-A string that is the last n charachters from string.
+string The last n charachters from the input string.
 }
 \description{
-Helper function to return the last n charachters of a string.
+\code{stringEnd} return the last n charachters of a string.
 }
