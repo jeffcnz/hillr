@@ -1,13 +1,21 @@
 #' Hilltop Ensemble Statistics Background.
 #'
+#' \code{hilltopEnsembleStatBackground} returns background stats information
+#'
 #' Helper Function that takes the parsed xml from an Ensemble Statistics request.
 #' Returns a single line dataframe of the Statistics background information This
 #' needs to be combined with the stats themselves to get a full dataframe.
+#'
 #' @inheritParams is.hilltopXml
+#'
 #' @return A single line dataframe of the statistics background information.
+#'
 #' @export
+#'
 #' @importFrom XML xpathApply xpathSApply xmlName xmlGetAttr xmlValue
+#'
 hilltopEnsembleStatBkgnd <- function(xmldata){
+  #extract the xml containing the data
   bgtemp <- base::do.call(base::rbind, XML::xpathApply(xmldata, "/HilltopServer", function(node) {
     xp <- "./*"
     attribute <- XML::xpathSApply(node, xp, XML::xmlName)
@@ -25,13 +33,20 @@ hilltopEnsembleStatBkgnd <- function(xmldata){
 
 #' Hilltop Ensemble Statistics By Time Period.
 #'
+#' \code{hilltopEnsembleStatsByTimePeriod} return stats for each time period.
+#'
 #' Helper function that takes parsed xml from an EnsembleStats Request. Returns
 #' the statistics for each time period (depending whether hourly, monthly or
 #' annual stats).
+#'
 #' @inheritParams is.hilltopXml
+#'
 #' @return A dataframe of the of the summary statistics for each time period.
+#'
 #' @export
+#'
 #' @importFrom XML xpathApply xpathSApply xmlName xmlGetAttr xmlValue
+#'
 hilltopEnsembleStatByTimePeriod <- function(xmldata){
   estatperiod <- period(xmldata)
 
@@ -54,12 +69,18 @@ hilltopEnsembleStatByTimePeriod <- function(xmldata){
 
 #' Hilltop Ensemble Statistics By Time Period, With Summary Information.
 #'
+#' \code{hilltopEnsembleStatFull} returns full dataframe of ensemble stats
+#'
 #' Takes the parsed xml from an EnsembleStats Request. Returns a dataframe of the
 #' statistics for the period, along with the background information such as site
 #' measurement units etc.
+#'
 #' @inheritParams is.hilltopXml
+#'
 #' @return A dataframe of the ensemble statistics along with the background metadata.
+#'
 #' @export
+#'
 hilltopEnsembleStatFull <- function(xmldata) {
   bg <- hilltopEnsembleStatBkgnd(xmldata)
   pe <- hilltopEnsembleStatByTimePeriod(xmldata)
