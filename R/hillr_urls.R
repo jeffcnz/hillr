@@ -1,12 +1,16 @@
-# http://data.hbrc.govt.nz/EnviroData/Emar.hts?Service=Hilltop&Request=GetData&Site=Ngaruroro River at Fernhill&Measurement=Total Nitrogen&From=1/6/2014"
-
 #' Create a url to request a site list from a Hilltop Server.
+#'
+#' \code{buildSiteListUrl} returns a url to request a site list
 #'
 #' Takes a valid Hilltop server endpoint and returns a url that requests the
 #' site list from the endpoint.
+#'
 #' @inheritParams fixEndpoint
+#'
 #' @return string A Hilltop url request for a site list.
+#'
 #' @export
+#'
 buildSiteListUrl <- function(endpoint) {
   # check whether a '?' is the last charachter of the endpoint, if not add one
   # and check that the endpoint is valid.
@@ -25,12 +29,19 @@ buildSiteListUrl <- function(endpoint) {
 
 #' Create a url to request a measurement list for a site from a Hilltop Server.
 #'
+#' \code{buildMeasurementListUrl} returns a url to request a measuremnt list for a site.
+#'
 #' Takes a valid Hilltop server endpoint and a site name and returns a url that
 #' requests the measurement list for that site from the endpoint.
+#'
 #' @inheritParams fixEndpoint
+#'
 #' @param site string A site that has data available on the server.
+#'
 #' @return string A Hilltop url request for a measurement list for the site.
+#'
 #' @export
+#'
 buildMeasurementListUrl <- function(endpoint, site) {
   # check whether a '?' is the last charachter of the endpoint, if not add one
   # and check that the endpoint is valid.
@@ -48,8 +59,9 @@ buildMeasurementListUrl <- function(endpoint, site) {
   return(hillUrl)
 }
 
-#' Create a url to request data for a site and measurement from a Hilltop
-#' Server.
+#' Create a url to request data for a site and measurement.
+#'
+#' \code{buildDataRequestUrl} returns a url to request data for a site and measurement
 #'
 #' Takes a valid Hilltop server endpoint, a site name, a measurement name  and
 #' optional from, to or timeIntervaland arguments, an optional timeseries type
@@ -57,23 +69,32 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #' measurement for the requested time range from the endpoint. For standard time
 #' series, statistics can be requested, to request these a method, interval and
 #' allignment argument need to be provided.
+#'
 #' @inheritParams fixEndpoint
+#'
 #' @inheritParams buildMeasurementListUrl
+#'
 #' @param measurement string A measurement that has data available for the
 #'   requested site on the server.
+#'
 #' @param from string (optional) The date (or date time combination) that data
 #'   is required from (if not provided only the last measurement will be
 #'   provided.)
+#'
 #' @param to string (optional) The date (or date time combination) that data is
 #'   required up to (if not provided data will be provided from the from date to
 #'   the most recent data available.)
+#'
 #' @param timeInterval string (optional) A time interval that data is requested
 #'   over, either of the form P1D, or P3M, or fromDateTime/toDateTime.
+#'
 #' @param tsType string (optional) The type of time series being requested.
 #'   Default is StdTimeSeries, but quality code data can be obtained using
 #'   tsType = StdQualSeries.
+#'
 #' @param alignment string (optional) A time or keyword that the data should be
 #'   aligned to.
+#'
 #' @param method string (optional) A statistical method to apply to the data.
 #'   The options are Interpolate, Average, Total, Moving Average and EP.
 #'   Interpolate - Provide data aligned with the requested interval. Average -
@@ -81,6 +102,7 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #'   the total in the interval. Moving Average - Provide the moving average in
 #'   the interval, timestamped to half of the interval. EP - Provide the
 #'   exceedence percentile based on the whole available dataset.
+#'
 #' @param interval string (optional) The interval for the statistic to be
 #'   computed over.
 #'
@@ -88,6 +110,7 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #'   the time period for the site.
 #'
 #' @export
+#'
 buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInterval, tsType, alignment, method, interval) {
   # check whether a '?' is the last charachter of the endpoint, if not add one
   # and check that the endpoint is valid.
