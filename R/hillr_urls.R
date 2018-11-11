@@ -7,11 +7,15 @@
 #'
 #' @inheritParams fixEndpoint
 #'
+#' @param location logical (optional) whether the Lat Long for the sites is
+#'   returned
+#'
 #' @return string A Hilltop url request for a site list.
 #'
 #' @export
 #'
-buildSiteListUrl <- function(endpoint) {
+buildSiteListUrl <- function(endpoint, location) {
+  if(missing(location)) {location <- TRUE}
   # check whether a '?' is the last charachter of the endpoint, if not add one
   # and check that the endpoint is valid.
   endpoint <- checkFixEndpoint(endpoint)
@@ -19,10 +23,13 @@ buildSiteListUrl <- function(endpoint) {
   service <- "Hilltop"
   # set the request as 'SiteList'
   request <- "SiteList"
+  # set the location request string
+  locStr <- if(locaton) {"&Location = LatLong"} else {""}
   # build the url
   hillUrl <- base::paste0(endpoint,
                     "Service=", service,
-                    "&Request=", request)
+                    "&Request=", request,
+                    locStr)
   # return the url
   return(hillUrl)
 }

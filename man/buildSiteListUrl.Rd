@@ -4,10 +4,13 @@
 \alias{buildSiteListUrl}
 \title{Create a url to request a site list from a Hilltop Server.}
 \usage{
-buildSiteListUrl(endpoint)
+buildSiteListUrl(endpoint, location)
 }
 \arguments{
 \item{endpoint}{string A valid hilltop endpoint.}
+
+\item{location}{logical (optional) whether the Lat Long for the sites is
+returned}
 }
 \value{
 string A Hilltop url request for a site list.
