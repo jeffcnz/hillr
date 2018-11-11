@@ -24,7 +24,7 @@ buildSiteListUrl <- function(endpoint, location) {
   # set the request as 'SiteList'
   request <- "SiteList"
   # set the location request string
-  locStr <- if(location) {"&Location = LatLong"} else {""}
+  locStr <- if(location) {"&Location=LatLong"} else {""}
   # build the url
   hillUrl <- base::paste0(endpoint,
                     "Service=", service,
