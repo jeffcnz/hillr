@@ -28,7 +28,7 @@ getHilltopData <- function(endpoint, site, measurement, from, to, timeInterval, 
                                   method = method,
                                   interval = interval)
   # Parse the XML
-  dataXml <- anyXmlParse(dataUrl)
+  dataXml <- hillXmlParse(dataUrl)
   # Check for errors
 
   # Request the data
@@ -53,7 +53,7 @@ getHilltopSites <- function(endpoint) {
   # Build the url.
   sitesUrl <- buildSiteListUrl(endpoint = endpoint)
   # Parse the XML
-  sitesXml <- anyXmlParse(sitesUrl)
+  sitesXml <- hillXmlParse(sitesUrl)
   #Check for errors
 
   # Request the data
@@ -79,7 +79,7 @@ getHilltopMeasurements <- function(endpoint, site) {
   measurementsUrl <- buildMeasurementListUrl(endpoint = endpoint,
                                       site = site)
   # Parse the XML
-  measurementsXml <- anyXmlParse(measurementsUrl)
+  measurementsXml <- hillXmlParse(measurementsUrl)
   # Check for errors
 
   # Request the data
