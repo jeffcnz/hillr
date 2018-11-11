@@ -139,3 +139,25 @@ xmlError <- function(xmldata) {
   return(errorMsg)
 }
 
+#' Parse hilltop XML, notifying errors
+#'
+#' \code{hillXmlParse} returns hilltop xml for processing
+#'
+#' @inheritParams anyXmlParse
+#'
+#' @return Parsed Hilltop XML.
+#'
+#' @export
+#'
+hillXmlParse <- function(url) {
+  #parse the requested data
+  xml <- anyXmlParse(url)
+  #check for an error message
+  error <- xmlError(xml)
+  #if there's an error message return it, otherwise return the xml
+  if(base::length(error) > 0) {
+    stop(error)
+  } else {
+    return(xml)
+  }
+}
