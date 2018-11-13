@@ -1,7 +1,7 @@
 Package: hillr
 Type: Package
 Title: Interaction With A Hilltop Timeseries Server
-Version: 0.1.0
+Version: 0.2.0
 Author: Jeff Cooke
 Maintainer: Jeff Cooke <jeffjcooke@hotmail.com>
 Description: Functions to interact with a Hilltop time series server 
@@ -14,5 +14,8 @@ Imports:
     reshape2,
     plyr,
     RCurl,
-    stats
+    stats,
+    dplyr,
+    lubridate,
+    tidyr
 RoxygenNote: 6.1.1
