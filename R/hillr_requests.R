@@ -28,7 +28,7 @@ getHilltopData <- function(endpoint, site, measurement, from, to, timeInterval, 
                                   method = method,
                                   interval = interval)
   # Parse the XML
-  dataXml <- hillXmlParse(dataUrl)
+  dataXml <- tryCatch({hillXmlParse(dataUrl)}, error = function(err) {stop(error)})
   # Check for errors
 
   # Request the data
