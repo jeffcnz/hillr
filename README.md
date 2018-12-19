@@ -34,6 +34,18 @@ eColi <- getHilltopData(endpoint = "http://data.hbrc.govt.nz/Envirodata/EMAR.hts
                        to = "1/10/2018")
 ```
 
+To get all the metadata for a measurement, or to get data from multiple sites and measurements
+
+'''R
+data <- fullGetHilltopData(endpoint = "http://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
+                           sites = c("Maraetotara Lagoon", "Ngaruroro River at Fernhill"),
+                           measurements = c("E. Coli", "Nitrate Nitrogen"),
+                           from = "1/1/2017",
+                           to = "1/10/2017",
+                           option = "WQ")
+'''
+
+
 ## Replaces
 
 This package replaces and extends the functions contained in the Hilltop.R repository.  That repository will remain, but this package is meant to be used instead of the previous functions.
