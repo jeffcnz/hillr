@@ -36,14 +36,14 @@ eColi <- getHilltopData(endpoint = "http://data.hbrc.govt.nz/Envirodata/EMAR.hts
 
 To get all the metadata for a measurement, or to get data from multiple sites and measurements
 
-'''R
+```R
 data <- fullGetHilltopData(endpoint = "http://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
                            sites = c("Maraetotara Lagoon", "Ngaruroro River at Fernhill"),
                            measurements = c("E. Coli", "Nitrate Nitrogen"),
                            from = "1/1/2017",
                            to = "1/10/2017",
                            option = "WQ")
-'''
+```
 
 
 ## Replaces
