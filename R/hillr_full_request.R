@@ -144,7 +144,7 @@ fullGetHilltopData <- function(endpoint, sites, measurements, from, to, option, 
                              message(paste("Error retrieving WQ sample metadata for", site, err))
                            })
       #drop duplicate columns, SIte, Measurement and Units
-      if(exists("wqSampDf")) {
+      if(length(wqSampDf) > 0) {
         wqSampDf <- subset(wqSampDf, select = -c(Site, Measurement, Units))
       }
       #wqSampDf <- tryCatch(subset(wqSampDf, select = -c(Site, Measurement, Units)))
