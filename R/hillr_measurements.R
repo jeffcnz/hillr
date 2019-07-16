@@ -87,7 +87,7 @@ hilltopDataSourceToDF<-function(xmldata) {
   } else {
     #Extract the measurement name from the xml and return this in a dataframe
     #that can be associated with the measuremnts.
-    itemName <- dataxml[["string(//DataSource/@Name)"]]
+    itemName <- xmldata[["string(//DataSource/@Name)"]]
     base::data.frame(ItemName = itemName, stringsAsFactors = FALSE)
   }
   #return the metadata
