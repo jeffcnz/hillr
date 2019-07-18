@@ -45,5 +45,32 @@ computed over.}
 dataframe of measurements with optional metadata for requested sites.
 }
 \description{
-\code{fullGetHilltopData} returns a dataframe of requested measurements at sites.
+\code{fullGetHilltopData} returns a dataframe of requested measurements at
+sites.
+}
+\details{
+Takes a valid Hilltop server endpoint, a vector of site names, a vector of
+measurement names and optional from, to or timeIntervaland arguments, an
+optional timeseries type argument, and an option argument identifying the
+type of metadata to be returned in the output dataframe. The function returns
+a dataframe of the data for that site and measurement for the requested time
+range from the endpoint. For standard time series, statistics can be
+obtained, to request these a method, interval and allignment argument need to
+be provided.  The option argument provided determines what metadata is
+returned.
+
+If no option is provided, or the option is "None" then no additional metadata
+will be provided, the fuction works like getHilltopData, but allows multiple
+sites and or measurements to be provided.
+
+If the option is "WQ" then water quality sample metadata will be provided in
+the output where it is available.
+
+If the option is "Standard" then the quality code information for standard
+(continuous) is provided with the data.
+
+Note: Currently if measurements of mixed types are requested then only one
+type of metadata can be associated with the results (ie Water Quality, or
+Continuous). If both types are required with full metadata then seperate
+requests will be required.
 }

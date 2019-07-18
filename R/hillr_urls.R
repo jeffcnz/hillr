@@ -14,6 +14,8 @@
 #'
 #' @export
 #'
+#' @importFrom stringr str_replace_all
+#'
 buildSiteListUrl <- function(endpoint, location) {
   if(missing(location)) {location <- TRUE}
   # check whether a '?' is the last charachter of the endpoint, if not add one
@@ -30,6 +32,8 @@ buildSiteListUrl <- function(endpoint, location) {
                     "Service=", service,
                     "&Request=", request,
                     locStr)
+  # replace spaces with %20
+  hillUrl <- stringr::str_replace_all(hillUrl, ' ', '%20')
   # return the url
   return(hillUrl)
 }
@@ -49,6 +53,8 @@ buildSiteListUrl <- function(endpoint, location) {
 #'
 #' @export
 #'
+#' @importFrom stringr str_replace_all
+#'
 buildMeasurementListUrl <- function(endpoint, site) {
   # check whether a '?' is the last charachter of the endpoint, if not add one
   # and check that the endpoint is valid.
@@ -62,6 +68,8 @@ buildMeasurementListUrl <- function(endpoint, site) {
                           "Service=", service,
                           "&Request=", request,
                           "&Site=", site)
+  # replace spaces with %20
+  hillUrl <- stringr::str_replace_all(hillUrl, ' ', '%20')
   # return the url
   return(hillUrl)
 }
@@ -117,6 +125,8 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #'   the time period for the site.
 #'
 #' @export
+#'
+#' @importFrom stringr str_replace_all
 #'
 buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInterval, tsType, alignment, method, interval) {
   # check whether a '?' is the last charachter of the endpoint, if not add one
@@ -230,6 +240,8 @@ buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInter
                           alignmentStr,
                           methodStr,
                           intervalStr)
+  # replace spaces with %20
+  hillUrl <- stringr::str_replace_all(hillUrl, ' ', '%20')
   # return the url
   return(hillUrl)
 }

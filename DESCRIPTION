@@ -17,7 +17,8 @@ Imports:
     stats,
     dplyr,
     lubridate,
-    tidyr
+    tidyr,
+    stringr
 RoxygenNote: 6.1.1
 Suggests: 
     testthat
