@@ -33,7 +33,7 @@ buildSiteListUrl <- function(endpoint, location) {
                     "&Request=", request,
                     locStr)
   # replace spaces with %20
-  hillUrl <- stringr::str_replace_all(hillUrl, ' ', '%20')
+  hillUrl <- utils::URLencode(hillUrl)
   # return the url
   return(hillUrl)
 }
@@ -69,7 +69,7 @@ buildMeasurementListUrl <- function(endpoint, site) {
                           "&Request=", request,
                           "&Site=", site)
   # replace spaces with %20
-  hillUrl <- stringr::str_replace_all(hillUrl, ' ', '%20')
+  hillUrl <- utils::URLencode(hillUrl)
   # return the url
   return(hillUrl)
 }
@@ -241,7 +241,7 @@ buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInter
                           methodStr,
                           intervalStr)
   # replace spaces with %20
-  hillUrl <- stringr::str_replace_all(hillUrl, ' ', '%20')
+  hillUrl <- utils::URLencode(hillUrl)
   # return the url
   return(hillUrl)
 }
