@@ -4,8 +4,18 @@
 \alias{buildDataRequestUrl}
 \title{Create a url to request data for a site and measurement.}
 \usage{
-buildDataRequestUrl(endpoint, site, measurement, from, to, timeInterval,
-  tsType, alignment, method, interval)
+buildDataRequestUrl(
+  endpoint,
+  site,
+  measurement,
+  from,
+  to,
+  timeInterval,
+  tsType,
+  alignment,
+  method,
+  interval
+)
 }
 \arguments{
 \item{endpoint}{string A valid hilltop endpoint.}

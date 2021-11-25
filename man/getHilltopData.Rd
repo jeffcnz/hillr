@@ -4,8 +4,18 @@
 \alias{getHilltopData}
 \title{General function to get timeseries data from a Hilltop server.}
 \usage{
-getHilltopData(endpoint, site, measurement, from, to, timeInterval, tsType,
-  alignment, method, interval)
+getHilltopData(
+  endpoint,
+  site,
+  measurement,
+  from,
+  to,
+  timeInterval,
+  tsType,
+  alignment,
+  method,
+  interval
+)
 }
 \arguments{
 \item{endpoint}{string A valid hilltop endpoint.}

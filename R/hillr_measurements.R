@@ -18,6 +18,8 @@
 #'
 #' @importFrom reshape2 dcast
 #'
+#' @importFrom dplyr group_by mutate
+#'
 hilltopMeasurementToDF <- function(xmldata) {
   #get the xml nodes that relate to the timeseries
   idNodes <- XML::getNodeSet(xmldata, "//Measurement/Data/E")
@@ -35,6 +37,12 @@ hilltopMeasurementToDF <- function(xmldata) {
   data <- data[!(data$Attribute == "NULL"), ]
   #convert everything to character format
   data <- base::data.frame(base::lapply(data, base::as.character), stringsAsFactors = FALSE)
+  #group duplicate entries for Time and Attribute, any duplicate values will be joined by a |.
+  data <- data %>%
+    dplyr::group_by(Time, Attribute) %>%
+    dplyr::mutate(Content = paste(Content, collapse = " | "))
+  #remove duplicates
+  data <- base::unique(data)
   #reshape the dataframe to 'wide' format (pivot the data)
   cdata <- reshape2::dcast(data, Time ~ Attribute, value.var = "Content")
   #convert the time field to time format

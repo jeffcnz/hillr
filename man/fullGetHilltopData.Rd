@@ -4,8 +4,18 @@
 \alias{fullGetHilltopData}
 \title{Multiple sites and measurements to Dataframe.}
 \usage{
-fullGetHilltopData(endpoint, sites, measurements, from, to, option,
-  timeInterval, alignment, method, interval)
+fullGetHilltopData(
+  endpoint,
+  sites,
+  measurements,
+  from,
+  to,
+  option,
+  timeInterval,
+  alignment,
+  method,
+  interval
+)
 }
 \arguments{
 \item{endpoint}{string A valid hilltop endpoint.}

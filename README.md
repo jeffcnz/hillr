@@ -14,20 +14,20 @@ devtools::install_github("jeffcnz/hillr")
 To get a list of sites available from the endpoint
 
 ```R
-sites <- getHilltopSites(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?")
+sites <- getHilltopSites(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDiscrete.hts?")
 ```
 
 To get a list of measurements at a site
 
 ```R
-measurements <- getHilltopMeasurements(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
+measurements <- getHilltopMeasurements(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDiscrete.hts?",
                                                    site = "Maraetotara Lagoon")
 ```
 
 To get some data for a site you'll need to know the Hilltop server endpoint, site name, and measurement
 
 ```R
-eColi <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
+eColi <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDiscrete.hts?",
                        site = "Maraetotara Lagoon",
                        measurement = "E. Coli",
                        from = "1/1/2018",
@@ -37,7 +37,7 @@ eColi <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.ht
 To get all the metadata for a measurement, or to get data from multiple sites and measurements
 
 ```R
-data <- fullGetHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
+data <- fullGetHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDiscrete.hts?",
                            sites = c("Maraetotara Lagoon", "Ngaruroro River at Fernhill"),
                            measurements = c("E. Coli", "Nitrate Nitrogen"),
                            from = "1/1/2017",
