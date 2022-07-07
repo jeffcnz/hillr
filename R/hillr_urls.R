@@ -111,12 +111,13 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #'   aligned to.
 #'
 #' @param method string (optional) A statistical method to apply to the data.
-#'   The options are Interpolate, Average, Total, Moving Average and EP.
-#'   Interpolate - Provide data aligned with the requested interval. Average -
-#'   Provide the average of the measurement across the interval. Total - Provide
-#'   the total in the interval. Moving Average - Provide the moving average in
-#'   the interval, timestamped to half of the interval. EP - Provide the
-#'   exceedence percentile based on the whole available dataset.
+#'   The options are Interpolate, Average, Total, Moving Average, EP and Extrema.
+#'   Interpolate - Provide data aligned with the requested interval.
+#'   Average - Provide the average of the measurement across the interval.
+#'   Total - Provide the total in the interval.
+#'   Moving Average - Provide the moving average in the interval, timestamped to half of the interval.
+#'   EP - Provide the exceedence percentile based on the whole available dataset.
+#'   Extrema - Provide the Min, Mean, Max, Amount of missing record (s) ,Time of Min and Time of Max over the interval.
 #'
 #' @param interval string (optional) The interval for the statistic to be
 #'   computed over.
@@ -129,7 +130,7 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #' @importFrom stringr str_replace_all
 #'
 buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInterval, tsType, alignment, method, interval) {
-  # check whether a '?' is the last charachter of the endpoint, if not add one
+  # check whether a '?' is the last character of the endpoint, if not add one
   # and check that the endpoint is valid.
   endpoint <- checkFixEndpoint(endpoint)
 
@@ -208,7 +209,7 @@ buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInter
     methodStr <- ""
   } else {
     #Check that the tsType matches allowed values.
-    allowedMethods <- c("Interpolate", "Average", "Total", "Moving Average", "EP")
+    allowedMethods <- c("Interpolate", "Average", "Total", "Moving Average", "EP", "Extrema")
     if(method %in% allowedMethods) {
       #build the tsType key value pair
       methodStr <- paste0("&Method=", method)

@@ -44,12 +44,13 @@ tsType = StdQualSeries.}
 aligned to.}
 
 \item{method}{string (optional) A statistical method to apply to the data.
-The options are Interpolate, Average, Total, Moving Average and EP.
-Interpolate - Provide data aligned with the requested interval. Average -
-Provide the average of the measurement across the interval. Total - Provide
-the total in the interval. Moving Average - Provide the moving average in
-the interval, timestamped to half of the interval. EP - Provide the
-exceedence percentile based on the whole available dataset.}
+The options are Interpolate, Average, Total, Moving Average, EP and Extrema.
+Interpolate - Provide data aligned with the requested interval.
+Average - Provide the average of the measurement across the interval.
+Total - Provide the total in the interval.
+Moving Average - Provide the moving average in the interval, timestamped to half of the interval.
+EP - Provide the exceedence percentile based on the whole available dataset.
+Extrema - Provide the Min, Mean, Max, Amount of missing record (s) ,Time of Min and Time of Max over the interval.}
 
 \item{interval}{string (optional) The interval for the statistic to be
 computed over.}

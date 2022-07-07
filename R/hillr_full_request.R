@@ -110,15 +110,17 @@ fullGetHilltopData <- function(endpoint, sites, measurements, from, to, option, 
         #If there's a QC column then fill the gaps
         if("QC" %in% colnames(tempDf)) {
           #Subset tempDf at the last time in the qual data frame.
-          tempQ <- subset(tempDf, Time <= maxQt)
-          tempNoQ <- subset(tempDf, Time > maxQt)
+          tempQ <- base::subset(tempDf, Time <= maxQt)
+          #tempQ <- tempDf[tempDF$Time <= maxQt, ]
+          tempNoQ <- base::subset(tempDf, Time > maxQt)
+          #tempNoQ <- tempDf[tempDF$Time > maxQt, ]
           #After that date there will be no QC
           #Before that date fill down QC
           tempQ <- tidyr::fill(tempQ, "QC")
           #remove blank measurements
-          tempQ <- subset(tempQ, !is.na(Site))
+          tempQ <- base::subset(tempQ, !is.na(Site))
           #recombine dataframes
-          tempDf <- rbind(tempQ, tempNoQ)
+          tempDf <- base::rbind(tempQ, tempNoQ)
 
         }
 
