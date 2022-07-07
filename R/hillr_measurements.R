@@ -20,6 +20,8 @@
 #'
 #' @importFrom dplyr group_by mutate
 #'
+#' @importFrom dplyr %>%
+#'
 hilltopMeasurementToDF <- function(xmldata) {
   #get the xml nodes that relate to the timeseries
   idNodes <- XML::getNodeSet(xmldata, "//Measurement/Data/E")

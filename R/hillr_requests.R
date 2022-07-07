@@ -33,6 +33,10 @@ getHilltopData <- function(endpoint, site, measurement, from, to, timeInterval, 
 
   # Request the data
   dataDf <- hilltopMeasurement(dataXml)
+  # Handle the Extrema Request
+  if(method == "Extrema") {
+    colnames(dataDf) <- c('Time', 'Minimum', 'Mean', 'Maximum', 'Missing', 'Time of Minimum', 'Time of Maximum', 'Site', 'Measurement', 'Units')
+  }
   # Return the data
   return(dataDf)
 }
