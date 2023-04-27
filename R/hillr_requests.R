@@ -20,15 +20,15 @@
 getHilltopData <- function(endpoint,
                            site,
                            measurement,
-                           from,
-                           to,
-                           timeInterval,
-                           tsType,
-                           alignment,
-                           method,
-                           interval,
-                           gapTolerance,
-                           showFinal) {
+                           from=NULL,
+                           to=NULL,
+                           timeInterval=NULL,
+                           tsType=NULL,
+                           alignment=NULL,
+                           method=NULL,
+                           interval=NULL,
+                           gapTolerance=NULL,
+                           showFinal=NULL) {
   # Build the url.
   dataUrl <- buildDataRequestUrl(endpoint = endpoint,
                                   site = site,
@@ -49,9 +49,12 @@ getHilltopData <- function(endpoint,
   # Request the data
   dataDf <- hilltopMeasurement(dataXml)
   # Handle the Extrema Request
-  if(method == "Extrema") {
-    colnames(dataDf) <- c('Time', 'Minimum', 'Mean', 'Maximum', 'Missing', 'Time of Minimum', 'Time of Maximum', 'Site', 'Measurement', 'Units')
+  if(!is.null(method)){
+    if(method == "Extrema") {
+      colnames(dataDf) <- c('Time', 'Minimum', 'Mean', 'Maximum', 'Missing', 'Time of Minimum', 'Time of Maximum', 'Site', 'Measurement', 'Units')
+    }
   }
+
   # Return the data
   return(dataDf)
 }

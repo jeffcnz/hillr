@@ -141,15 +141,15 @@ buildMeasurementListUrl <- function(endpoint, site) {
 buildDataRequestUrl <- function(endpoint,
                                 site,
                                 measurement,
-                                from,
-                                to,
-                                timeInterval,
-                                tsType,
-                                alignment,
-                                method,
-                                interval,
-                                gapTolerance,
-                                showFinal) {
+                                from=NULL,
+                                to=NULL,
+                                timeInterval=NULL,
+                                tsType=NULL,
+                                alignment=NULL,
+                                method=NULL,
+                                interval=NULL,
+                                gapTolerance=NULL,
+                                showFinal=NULL) {
   # check whether a '?' is the last character of the endpoint, if not add one
   # and check that the endpoint is valid.
   endpoint <- checkFixEndpoint(endpoint)
@@ -167,7 +167,7 @@ buildDataRequestUrl <- function(endpoint,
   if(missing(measurement)) {stop("No measurement name provided")}
 
   #Check whether a from date has been provided in the correct format and create an appropriate request string.
-  if(missing(from)) {
+  if(is.null(from)) {
     #Omit the from key value pair from the request.
     fromStr <- ""
   } else {
@@ -177,7 +177,7 @@ buildDataRequestUrl <- function(endpoint,
   }
 
   #Check whether a to date has been provided in the correct format and create an appropriate request string.
-  if(missing(to)) {
+  if(is.null(to)) {
     #Omit the from key value pair from the request.
     toStr <- ""
   } else {
@@ -188,7 +188,7 @@ buildDataRequestUrl <- function(endpoint,
   }
 
   #Check whether a timeInterval date has been provided in the correct format and create an appropriate request string.
-  if(missing(timeInterval)) {
+  if(is.null(timeInterval)) {
     #Omit the from key value pair from the request.
     timeIntStr <- ""
   } else {
@@ -199,7 +199,7 @@ buildDataRequestUrl <- function(endpoint,
   }
 
   #Check whether a tsType has been provided in the correct format and create an appropriate request string.
-  if(missing(tsType)) {
+  if(is.null(tsType)) {
     #Omit the from key value pair from the request.
     tsStr <- ""
   } else {
@@ -215,7 +215,7 @@ buildDataRequestUrl <- function(endpoint,
   }
 
   #Check whether an alignment has been provided in the correct format and create an appropriate request string.
-  if(missing(alignment)) {
+  if(is.null(alignment)) {
     #Omit the from key value pair from the request.
     alignmentStr <- ""
   } else {
@@ -224,7 +224,7 @@ buildDataRequestUrl <- function(endpoint,
   }
 
   #Check whether a valid method has been provided and create an appropriate request string.
-  if(missing(method)) {
+  if(is.null(method)) {
     #Omit the from key value pair from the request.
     methodStr <- ""
   } else {
@@ -240,7 +240,7 @@ buildDataRequestUrl <- function(endpoint,
   }
 
   #Check whether an interval has been provided in the correct format and create an appropriate request string.
-  if(missing(interval)) {
+  if(is.null(interval)) {
     #Omit the from key value pair from the request.
     intervalStr <- ""
   } else {
@@ -249,7 +249,7 @@ buildDataRequestUrl <- function(endpoint,
   }
 
   #Check whether a gap tolerance has been provided in the correct format and create an appropriate request string.
-  if(missing(gapTolerance)) {
+  if(is.null(gapTolerance)) {
     #Omit the from key value pair from the request.
     gapToleranceStr <- ""
   } else if(gapTolerance == "Interval") {
@@ -260,7 +260,7 @@ buildDataRequestUrl <- function(endpoint,
   }
 
   #Check whether an showFinal parameter has been provided in the correct format and create an appropriate request string.
-  if(missing(showFinal)) {
+  if(is.null(showFinal)) {
     #Default is to set showFinal as Yes.
     showFinalStr <- "&ShowFinal=Yes"
   } else {
