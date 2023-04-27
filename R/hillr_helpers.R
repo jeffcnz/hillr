@@ -9,7 +9,8 @@
 #' @export
 #' @importFrom XML xmlName xmlGetAttr xmlValue
 hilltopValueHelper <- function(xmlNode) {
-  if(XML::xmlName(xmlNode) != "T") {
+  if(!(XML::xmlName(xmlNode) %in% c("T", "D"))) {
+  #if(XML::xmlName(xmlNode) != "T") {
     if(XML::xmlName(xmlNode) == "Parameter") {
       return(XML::xmlGetAttr(xmlNode, "Value"))
     } else {return(XML::xmlValue(xmlNode)) }
@@ -32,7 +33,8 @@ hilltopValueHelper <- function(xmlNode) {
 #' @importFrom XML xmlName xmlGetAttr xmlValue
 #'
 hilltopAttributeHelper <- function(xmlNode) {
-  if(XML::xmlName(xmlNode) != "T") {
+  if(!(XML::xmlName(xmlNode) %in% c("T", "D"))) {
+  #if(XML::xmlName(xmlNode) != "T") {
     if(XML::xmlName(xmlNode) == "Parameter") {
       return(XML::xmlGetAttr(xmlNode, "Name"))
     } else {return(XML::xmlName(xmlNode)) }
