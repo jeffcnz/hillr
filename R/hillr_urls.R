@@ -120,7 +120,16 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #'   Extrema - Provide the Min, Mean, Max, Amount of missing record (s) ,Time of Min and Time of Max over the interval.
 #'
 #' @param interval string (optional) The interval for the statistic to be
-#'   computed over.
+#'   computed over.  eg 1 Day, 1 Month etc.
+#'
+#' @param gapTolerance string (optional) The gap tolerance interval for the statistic.
+#'   Default is no gap tolerance, ie if there are gaps in the interval a 0 result is returned.
+#'   If you want to ignore gaps completely then set the gap tolerance to the same as the Interval.
+#'   Accepts either an interval such as 1 Day, or 1 Month, or the word Interval
+#'   if you want to use the same period as provided in the interval parameter.
+#'
+#' @param showFinal string (optional) Options are Yes, or No, default is Yes.
+#'   If Yes then if the data stops part way through the last interval then the total in the interval is provided
 #'
 #' @return string A Hilltop url request for data for the site and measurement in
 #'   the time period for the site.
@@ -129,7 +138,18 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #'
 #' @importFrom stringr str_replace_all
 #'
-buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInterval, tsType, alignment, method, interval) {
+buildDataRequestUrl <- function(endpoint,
+                                site,
+                                measurement,
+                                from,
+                                to,
+                                timeInterval,
+                                tsType,
+                                alignment,
+                                method,
+                                interval,
+                                gapTolerance,
+                                showFinal) {
   # check whether a '?' is the last character of the endpoint, if not add one
   # and check that the endpoint is valid.
   endpoint <- checkFixEndpoint(endpoint)
@@ -137,7 +157,7 @@ buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInter
   # set the service as 'Hilltop'
   service <- "Hilltop"
 
-  # set the request as 'SiteList'
+  # set the request as 'GetData'
   request <- "GetData"
 
   #Check that a site name has been provided.
@@ -228,6 +248,26 @@ buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInter
     intervalStr <- base::paste0("&Interval=", interval)
   }
 
+  #Check whether a gap tolerance has been provided in the correct format and create an appropriate request string.
+  if(missing(gapTolerance)) {
+    #Omit the from key value pair from the request.
+    gapToleranceStr <- ""
+  } else if(gapTolerance == "Interval") {
+    gapToleranceStr <- base::paste0("&GapTolerance=", interval)
+  } else {
+    #TO DO - Check that the gapTolerance interval matches allowed values.
+    gapToleranceStr <- base::paste0("&GapTolerance=", gapTolerance)
+  }
+
+  #Check whether an showFinal parameter has been provided in the correct format and create an appropriate request string.
+  if(missing(showFinal)) {
+    #Default is to set showFinal as Yes.
+    showFinalStr <- "&ShowFinal=Yes"
+  } else {
+    #TO DO - Check that the parameter matches allowed values.
+    showFinalStr <- base::paste0("&ShowFinal=", showFinal)
+  }
+
   # build the url
   hillUrl <- base::paste0(endpoint,
                           "Service=", service,
@@ -240,7 +280,9 @@ buildDataRequestUrl <- function(endpoint, site, measurement, from, to, timeInter
                           timeIntStr,
                           alignmentStr,
                           methodStr,
-                          intervalStr)
+                          intervalStr,
+                          gapToleranceStr,
+                          showFinalStr)
   # replace spaces with %20
   hillUrl <- utils::URLencode(hillUrl)
   # return the url

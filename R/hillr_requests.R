@@ -8,6 +8,8 @@
 #' for the requested time range from the endpoint. For standard time series,
 #' statistics can be obtained, to request these a method, interval and
 #' allignment argument need to be provided.
+#' If statistics are requested the amount of gap in the data can be specified
+#' as an interval.
 
 #' @inheritParams buildDataRequestUrl
 #'
@@ -15,7 +17,18 @@
 #'
 #' @export
 
-getHilltopData <- function(endpoint, site, measurement, from, to, timeInterval, tsType, alignment, method, interval) {
+getHilltopData <- function(endpoint,
+                           site,
+                           measurement,
+                           from,
+                           to,
+                           timeInterval,
+                           tsType,
+                           alignment,
+                           method,
+                           interval,
+                           gapTolerance,
+                           showFinal) {
   # Build the url.
   dataUrl <- buildDataRequestUrl(endpoint = endpoint,
                                   site = site,
@@ -26,7 +39,9 @@ getHilltopData <- function(endpoint, site, measurement, from, to, timeInterval, 
                                   tsType = tsType,
                                   alignment = alignment,
                                   method = method,
-                                  interval = interval)
+                                  interval = interval,
+                                  gapTolerance = gapTolerance,
+                                  showFinal = showFinal)
   # Parse the XML
   dataXml <- tryCatch({hillXmlParse(dataUrl)}, error = function(err) {stop(err)})
   # Check for errors
