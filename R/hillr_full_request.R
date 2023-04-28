@@ -95,7 +95,8 @@ fullGetHilltopData <- function(endpoint, sites, measurements, from, to, option, 
                                          from = qualFrom, #no to date so that it grabs all quality data
                                          tsType = "StdQualSeries")})
         #Subset quality frame so only get Time and Value
-        qual <- tryCatch(subset(qual, select = c("Time", "Value")))
+        #qual <- tryCatch(subset(qual, select = c("Time", "Value")))
+        qual <- tryCatch(qual[,c("Time", "Value")])
         #Change Value to QC
         if(exists("qual")) {
           colnames(qual)[which(names(qual) == "Value")] <- "QC"
@@ -119,6 +120,7 @@ fullGetHilltopData <- function(endpoint, sites, measurements, from, to, option, 
           tempQ <- tidyr::fill(tempQ, "QC")
           #remove blank measurements
           tempQ <- base::subset(tempQ, !is.na(Site))
+          #tempQ <- tempQ[!is.na(tempQ$Site), ]
           #recombine dataframes
           tempDf <- base::rbind(tempQ, tempNoQ)
 
@@ -148,6 +150,7 @@ fullGetHilltopData <- function(endpoint, sites, measurements, from, to, option, 
       #drop duplicate columns, SIte, Measurement and Units
       if(length(wqSampDf) > 0) {
         wqSampDf <- subset(wqSampDf, select = -c(Site, Measurement, Units))
+        #wqSampDf <- wqSampDf[, !(names(wqSampDf) %in% c(Site, Measurement, Units))]
       }
       #wqSampDf <- tryCatch(subset(wqSampDf, select = -c(Site, Measurement, Units)))
       #merge water quality sample metadata with measurement data by Time

@@ -50,7 +50,7 @@ EP - Provide the exceedence percentile based on the whole available dataset.
 Extrema - Provide the Min, Mean, Max, Amount of missing record (s) ,Time of Min and Time of Max over the interval.}
 
 \item{interval}{string (optional) The interval for the statistic to be
-computed over.}
+computed over.  eg 1 Day, 1 Month etc.}
 }
 \value{
 dataframe of measurements with optional metadata for requested sites.

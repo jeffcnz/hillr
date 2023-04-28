@@ -26,7 +26,13 @@ hilltopMeasurementToDF <- function(xmldata) {
   #get the xml nodes that relate to the timeseries
   idNodes <- XML::getNodeSet(xmldata, "//Measurement/Data/E")
   #extract the times of the measurements
+  #Usually the request will return a data time in the XML node T
   Times <- base::lapply(idNodes, XML::xpathApply, path = "./T", XML::xmlValue)
+  # If there isn't anything in the T node then either there is no data, or it is date only.
+  if(length(Times[[1]])==0) {
+    # If date only data is requested then the date is returned in the XML node D
+    Times <- base::lapply(idNodes, XML::xpathApply, path = "./D", XML::xmlValue)
+  }
   #extract the values of the measurements
   values <- base::lapply(idNodes, XML::xpathApply, path = "./*", hilltopValueHelper)
   #extract any other attributes
@@ -48,7 +54,7 @@ hilltopMeasurementToDF <- function(xmldata) {
   #reshape the dataframe to 'wide' format (pivot the data)
   cdata <- reshape2::dcast(data, Time ~ Attribute, value.var = "Content")
   #convert the time field to time format
-  cdata$Time <- base::as.POSIXct(base::strptime(cdata$Time, format = "%Y-%m-%dT%H:%M:%S"))
+  cdata$Time <- base::as.POSIXct(cdata$Time, tryFormats = c("%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"))
   #give the value field a meaningful name.
   base::colnames(cdata)[base::colnames(cdata)=="I1"] <- "Value"
   #return the data

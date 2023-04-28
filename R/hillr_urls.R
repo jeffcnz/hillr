@@ -128,6 +128,12 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #'   Accepts either an interval such as 1 Day, or 1 Month, or the word Interval
 #'   if you want to use the same period as provided in the interval parameter.
 #'
+#' @param dateOnly string(optional) Whether the returned timestamp should be the date, with no time.
+#'   Default is date and time. Allowed values are Yes and No (default No)
+#'   This is useful when working with intervals ove a day or more as the returned value will be the end of the interval,
+#'   ie midnight on the day after the last day of the period.  This can be confusing as a monthly total for March
+#'   would be timestamped as midnight on 1 April. Setting dateOnly to Yes would return a date of 31 March.
+#'
 #' @param showFinal string (optional) Options are Yes, or No, default is Yes.
 #'   If Yes then if the data stops part way through the last interval then the total in the interval is provided
 #'
@@ -149,7 +155,8 @@ buildDataRequestUrl <- function(endpoint,
                                 method=NULL,
                                 interval=NULL,
                                 gapTolerance=NULL,
-                                showFinal=NULL) {
+                                showFinal=NULL,
+                                dateOnly=NULL) {
   # check whether a '?' is the last character of the endpoint, if not add one
   # and check that the endpoint is valid.
   endpoint <- checkFixEndpoint(endpoint)
@@ -264,9 +271,34 @@ buildDataRequestUrl <- function(endpoint,
     #Default is to set showFinal as Yes.
     showFinalStr <- "&ShowFinal=Yes"
   } else {
-    #TO DO - Check that the parameter matches allowed values.
-    showFinalStr <- base::paste0("&ShowFinal=", showFinal)
+    #Check that the argument matches allowed values.
+    allowedOptions <- c("Yes", "No")
+    if(showFinal %in% allowedOptions) {
+      #build the showFinal key value pair
+      showFinalStr <- base::paste0("&ShowFinal=", showFinal)
+    } else {
+      #Exit and indicate why the error occurred.
+      stop(base::paste("Invalid showFinal argument provided.  Allowed values are ", paste(allowedOptions, collapse = ", "),"."))
+    }
   }
+
+  #Check whether an dateOnly parameter has been provided in the correct format and create an appropriate request string.
+  if(is.null(dateOnly)) {
+    #Default is to omit.
+    dateOnlyStr <- ""
+  } else {
+    #Check that the argument matches allowed values.
+    dateOnlyOptions <- c("Yes", "No")
+    if(dateOnly %in% dateOnlyOptions) {
+      #build the dateOnly key value pair
+      dateOnlyStr <- base::paste0("&DateOnly=", dateOnly)
+    } else {
+      #Exit and indicate why the error occurred.
+      stop(base::paste("Invalid dateOnly argument provided.  Allowed values are ", paste(dateOnlyOptions, collapse = ", "),"."))
+    }
+
+  }
+
 
   # build the url
   hillUrl <- base::paste0(endpoint,
@@ -282,7 +314,8 @@ buildDataRequestUrl <- function(endpoint,
                           methodStr,
                           intervalStr,
                           gapToleranceStr,
-                          showFinalStr)
+                          showFinalStr,
+                          dateOnlyStr)
   # replace spaces with %20
   hillUrl <- utils::URLencode(hillUrl)
   # return the url

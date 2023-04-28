@@ -28,7 +28,8 @@ getHilltopData <- function(endpoint,
                            method=NULL,
                            interval=NULL,
                            gapTolerance=NULL,
-                           showFinal=NULL) {
+                           showFinal=NULL,
+                           dateOnly=NULL) {
   # Build the url.
   dataUrl <- buildDataRequestUrl(endpoint = endpoint,
                                   site = site,
@@ -41,7 +42,8 @@ getHilltopData <- function(endpoint,
                                   method = method,
                                   interval = interval,
                                   gapTolerance = gapTolerance,
-                                  showFinal = showFinal)
+                                  showFinal = showFinal,
+                                  dateOnly = dateOnly)
   # Parse the XML
   dataXml <- tryCatch({hillXmlParse(dataUrl)}, error = function(err) {stop(err)})
   # Check for errors
