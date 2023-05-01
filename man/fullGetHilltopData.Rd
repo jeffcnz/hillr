@@ -8,13 +8,17 @@ fullGetHilltopData(
   endpoint,
   sites,
   measurements,
-  from,
-  to,
-  option,
-  timeInterval,
-  alignment,
-  method,
-  interval
+  from = NULL,
+  to = NULL,
+  option = NULL,
+  timeInterval = NULL,
+  alignment = NULL,
+  method = NULL,
+  interval = NULL,
+  gapTolerance = NULL,
+  showFinal = NULL,
+  dateOnly = NULL,
+  showQuality = "Yes"
 )
 }
 \arguments{
@@ -51,6 +55,24 @@ Extrema - Provide the Min, Mean, Max, Amount of missing record (s) ,Time of Min 
 
 \item{interval}{string (optional) The interval for the statistic to be
 computed over.  eg 1 Day, 1 Month etc.}
+
+\item{gapTolerance}{string (optional) The gap tolerance interval for the statistic.
+Default is no gap tolerance, ie if there are gaps in the interval a 0 result is returned.
+If you want to ignore gaps completely then set the gap tolerance to the same as the Interval.
+Accepts either an interval such as 1 Day, or 1 Month, or the word Interval
+if you want to use the same period as provided in the interval parameter.}
+
+\item{showFinal}{string (optional) Options are Yes, or No, default is Yes.
+If Yes then if the data stops part way through the last interval then the total in the interval is provided}
+
+\item{dateOnly}{string(optional) Whether the returned timestamp should be the date, with no time.
+Default is date and time. Allowed values are Yes and No (default No)
+This is useful when working with intervals ove a day or more as the returned value will be the end of the interval,
+ie midnight on the day after the last day of the period.  This can be confusing as a monthly total for March
+would be timestamped as midnight on 1 April. Setting dateOnly to Yes would return a date of 31 March.}
+
+\item{showQuality}{string(optional) Options are Yes or No, default is Yes.
+Whether Quality Codes are returned with the data.  If quality codes are available they are returned.}
 }
 \value{
 dataframe of measurements with optional metadata for requested sites.

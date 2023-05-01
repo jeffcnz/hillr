@@ -1,7 +1,7 @@
 Package: hillr
 Type: Package
 Title: Interaction With A Hilltop Timeseries Server
-Version: 0.4.0
+Version: 0.4.1
 Author: Jeff Cooke
 Maintainer: Jeff Cooke <jeffjcooke@hotmail.com>
 Description: Functions to interact with a Hilltop time series server 
@@ -20,4 +20,7 @@ Imports:
     stringr
 RoxygenNote: 7.2.1
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat
+VignetteBuilder: knitr

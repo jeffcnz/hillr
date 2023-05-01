@@ -137,6 +137,9 @@ buildMeasurementListUrl <- function(endpoint, site) {
 #' @param showFinal string (optional) Options are Yes, or No, default is Yes.
 #'   If Yes then if the data stops part way through the last interval then the total in the interval is provided
 #'
+#' @param showQuality string(optional) Options are Yes or No, default is Yes.
+#'   Whether Quality Codes are returned with the data.  If quality codes are available they are returned.
+#'
 #' @return string A Hilltop url request for data for the site and measurement in
 #'   the time period for the site.
 #'
@@ -156,7 +159,8 @@ buildDataRequestUrl <- function(endpoint,
                                 interval=NULL,
                                 gapTolerance=NULL,
                                 showFinal=NULL,
-                                dateOnly=NULL) {
+                                dateOnly=NULL,
+                                showQuality="Yes") {
   # check whether a '?' is the last character of the endpoint, if not add one
   # and check that the endpoint is valid.
   endpoint <- checkFixEndpoint(endpoint)
@@ -299,6 +303,24 @@ buildDataRequestUrl <- function(endpoint,
 
   }
 
+  #Check whether an showQuality parameter has been provided in the correct format and create an appropriate request string.
+  if(missing(showQuality)){
+    # If no showQual;ity parameter, then default to showing quality code
+    showQualityStr <- "&ShowQuality=Yes"
+  } else {
+    #Check that the argument matches allowed values.
+    showQualityOptions <- c("Yes", "No")
+    if(showQuality %in% showQualityOptions) {
+      #build the dateOnly key value pair
+      showQualityStr <- base::paste0("&ShowQuality=", showQuality)
+    } else {
+      #Exit and indicate why the error occurred.
+      stop(base::paste("Invalid showQuality argument provided.  Allowed values are ", paste(showQualityOptions, collapse = ", "),"."))
+    }
+  }
+
+
+
 
   # build the url
   hillUrl <- base::paste0(endpoint,
@@ -315,7 +337,8 @@ buildDataRequestUrl <- function(endpoint,
                           intervalStr,
                           gapToleranceStr,
                           showFinalStr,
-                          dateOnlyStr)
+                          dateOnlyStr,
+                          showQualityStr)
   # replace spaces with %20
   hillUrl <- utils::URLencode(hillUrl)
   # return the url

@@ -29,7 +29,8 @@ getHilltopData <- function(endpoint,
                            interval=NULL,
                            gapTolerance=NULL,
                            showFinal=NULL,
-                           dateOnly=NULL) {
+                           dateOnly=NULL,
+                           showQuality="Yes") {
   # Build the url.
   dataUrl <- buildDataRequestUrl(endpoint = endpoint,
                                   site = site,
@@ -43,7 +44,8 @@ getHilltopData <- function(endpoint,
                                   interval = interval,
                                   gapTolerance = gapTolerance,
                                   showFinal = showFinal,
-                                  dateOnly = dateOnly)
+                                  dateOnly = dateOnly,
+                                  showQuality=showQuality)
   # Parse the XML
   dataXml <- tryCatch({hillXmlParse(dataUrl)}, error = function(err) {stop(err)})
   # Check for errors
@@ -55,6 +57,13 @@ getHilltopData <- function(endpoint,
     if(method == "Extrema") {
       colnames(dataDf) <- c('Time', 'Minimum', 'Mean', 'Maximum', 'Missing', 'Time of Minimum', 'Time of Maximum', 'Site', 'Measurement', 'Units')
     }
+  }
+
+  # Handle the Quality Code for continuous measurements being provided diffferently to discrete.
+  # Continuous Data Quality Codes are provided in Column Q1, WQ Quality codes are in Field QualityCode
+  if("Q1" %in% colnames(dataDf)) {
+    # Change field name Q1 to QualityCode
+    names(dataDf)[names(dataDf) == 'Q1'] <- "QualityCode"
   }
 
   # Return the data

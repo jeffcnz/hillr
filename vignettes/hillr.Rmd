@@ -1,18 +1,28 @@
-# hillr
+---
+title: "hillr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{hillr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-A R package for interacting with a Hilltop time series server.  
-More information on using Hilltop Servers can be found [here](https://www.hbrc.govt.nz/assets/Document-Library/Council-Data/20170426-HilltopServerTrimmed.pdf)
-This package implements many of the features available on a Hilltop server, but not all options are available.
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
-# Features
-
-# Usage
+```{r setup}
+library(hillr)
+```
 
 ## List of Sites
 
 To get a list of sites available from the endpoint
 
-```R
+```{r sites}
 sites <- getHilltopSites(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDiscrete.hts?")
 ```
 
@@ -20,7 +30,7 @@ sites <- getHilltopSites(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDi
 
 To get a list of measurements at a site
 
-```R
+```{r measurements}
 measurements <- getHilltopMeasurements(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDiscrete.hts?",
                                                    site = "Maraetotara Lagoon")
 ```
@@ -36,7 +46,7 @@ Generally the fullGetHilltopData function is the preferred option.
 ### Discrete (Sample Data)
 
 
-```R
+```{r data}
 eColi <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDiscrete.hts?",
                        site = "Maraetotara Lagoon",
                        measurement = "E. Coli",
@@ -46,32 +56,11 @@ eColi <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDis
 
 To get all the metadata for a measurement, or to get data from multiple sites and measurements
 
-```R
-data <- fullGetHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDiscrete.hts?",
+```{r fulldata}
+ data <- fullGetHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDiscrete.hts?",
                            sites = c("Maraetotara Lagoon", "Ngaruroro River at Fernhill"),
                            measurements = c("E. Coli", "Nitrate Nitrogen"),
                            from = "1/1/2017",
                            to = "1/10/2017",
                            option = "WQ")
 ```
-
-# Requirements
-
-# Installation
-
-In R make sure that you have devtools installed.
-Remove any preinstalled versions of hillr, then run
-
-```R
-devtools::install_github("jeffcnz/hillr")
-```
-
-# Authors
-
-* **Jeff Cooke**
-
-# License
-
-This project is licensed under the MIT License
-
-

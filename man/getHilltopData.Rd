@@ -17,7 +17,8 @@ getHilltopData(
   interval = NULL,
   gapTolerance = NULL,
   showFinal = NULL,
-  dateOnly = NULL
+  dateOnly = NULL,
+  showQuality = "Yes"
 )
 }
 \arguments{
@@ -72,6 +73,9 @@ Default is date and time. Allowed values are Yes and No (default No)
 This is useful when working with intervals ove a day or more as the returned value will be the end of the interval,
 ie midnight on the day after the last day of the period.  This can be confusing as a monthly total for March
 would be timestamped as midnight on 1 April. Setting dateOnly to Yes would return a date of 31 March.}
+
+\item{showQuality}{string(optional) Options are Yes or No, default is Yes.
+Whether Quality Codes are returned with the data.  If quality codes are available they are returned.}
 }
 \value{
 dataframe A dataframe of the timeseries data.
