@@ -82,9 +82,9 @@ getHilltopData <- function(endpoint,
 #' @return A dataframe of site names
 #'
 #' @export
-getHilltopSites <- function(endpoint) {
+getHilltopSites <- function(endpoint, measurement, location) {
   # Build the url.
-  sitesUrl <- buildSiteListUrl(endpoint = endpoint)
+  sitesUrl <- buildSiteListUrl(endpoint = endpoint, measurement=measurement, location=location)
   # Parse the XML
   sitesXml <- hillXmlParse(sitesUrl)
   #Check for errors

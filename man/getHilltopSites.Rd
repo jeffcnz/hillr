@@ -4,10 +4,15 @@
 \alias{getHilltopSites}
 \title{General funtion to get a site list from a Hilltop server.}
 \usage{
-getHilltopSites(endpoint)
+getHilltopSites(endpoint, measurement, location)
 }
 \arguments{
 \item{endpoint}{string A valid hilltop endpoint.}
+
+\item{measurement}{string (optional) a measurement name that a site must have available.}
+
+\item{location}{logical (optional) whether the Lat Long for the sites is
+returned}
 }
 \value{
 A dataframe of site names

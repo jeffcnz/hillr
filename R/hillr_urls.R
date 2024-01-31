@@ -7,6 +7,8 @@
 #'
 #' @inheritParams fixEndpoint
 #'
+#' @param measurement string (optional) a measurement name that a site must have available.
+#'
 #' @param location logical (optional) whether the Lat Long for the sites is
 #'   returned
 #'
@@ -16,21 +18,28 @@
 #'
 #' @importFrom stringr str_replace_all
 #'
-buildSiteListUrl <- function(endpoint, location) {
+buildSiteListUrl <- function(endpoint, measurement, location) {
+  # Handle for optional parameters
+  if(missing(measurement)) {measurement <- ""}
   if(missing(location)) {location <- TRUE}
-  # check whether a '?' is the last charachter of the endpoint, if not add one
+  # check whether a '?' is the last character of the endpoint, if not add one
   # and check that the endpoint is valid.
   endpoint <- checkFixEndpoint(endpoint)
   # set the service as 'Hilltop'
   service <- "Hilltop"
   # set the request as 'SiteList'
   request <- "SiteList"
+  # set the measurement request string
+  measStr <- if(measurement != "") {
+                      paste0("&Measurement=", measurement)
+                      } else {""}
   # set the location request string
   locStr <- if(location) {"&Location=LatLong"} else {""}
   # build the url
   hillUrl <- base::paste0(endpoint,
                     "Service=", service,
                     "&Request=", request,
+                    measStr,
                     locStr)
   # replace spaces with %20
   hillUrl <- utils::URLencode(hillUrl)
@@ -56,7 +65,7 @@ buildSiteListUrl <- function(endpoint, location) {
 #' @importFrom stringr str_replace_all
 #'
 buildMeasurementListUrl <- function(endpoint, site) {
-  # check whether a '?' is the last charachter of the endpoint, if not add one
+  # check whether a '?' is the last character of the endpoint, if not add one
   # and check that the endpoint is valid.
   endpoint <- checkFixEndpoint(endpoint)
   # set the service as 'Hilltop'
