@@ -54,7 +54,7 @@ hilltopMeasurementToDF <- function(xmldata) {
   #reshape the dataframe to 'wide' format (pivot the data)
   cdata <- reshape2::dcast(data, Time ~ Attribute, value.var = "Content")
   #convert the time field to time format
-  cdata$Time <- base::as.POSIXct(cdata$Time, tryFormats = c("%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"))
+  cdata$Time <- base::as.POSIXct(cdata$Time, tz="UTC", tryFormats = c("%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"))
   #give the value field a meaningful name.
   base::colnames(cdata)[base::colnames(cdata)=="I1"] <- "Value"
   #return the data
