@@ -155,5 +155,74 @@ hilltopMeasurement<-function(xmldata){
 
 
 
+#' Hilltop Depth Profile Measurement Request As A Data Frame.
+#'
+#' \code{hilltopDepthProfile} returns a depth profile at times.
+#'
+#' Function to process the XML from a Hilltop url request for Depth Profile data
+#' into a dataframe that contains the measurement information. It returns a
+#' dataframe of the data for depth and each profile timestamp, including
+#' measurement name and the Site Name.
+#'
+#' @param url A url that returns an XML document of a Hilltop Depth Profile.
+#'
+#' @return A dataframe of a depth profile from a Hilltop datasource.
+#'
+#' @export
+#' @importFrom xml2 read_xml as_list
+#'
+#' @importFrom tibble as_tibble_col
+#'
+#' @importFrom tidyr unnest_longer unnest_wider unnest
+#'
+#' @importFrom dplyr mutate filter rename select
+#'
+#' @importFrom dplyr %>%
+#'
+hilltopDepthProfile <- function(url) {
+
+  #hillr needs to change from XML to xml2, should be able to simplify
+
+  #Read the xml
+  xmlData <- xml2::read_xml(url)
+
+
+  #Convert to list structure
+  xmlList <- xml2::as_list(xmlData)
+
+  #Create the output data frame
+  xml_df <- tibble::as_tibble_col(xmlList) %>%
+    #Extract the data into a long list (so multiple dates can be handled)
+    #Each section header is a different date
+    tidyr::unnest_longer(value) %>%
+    #Extract the sitename
+    dplyr::mutate(Site = base::lapply(value, attr, "SiteName")) %>%
+    #Extract the data to columns
+    tidyr::unnest_wider(value, names_sep = "_") %>%
+    #Extract the Agency
+    dplyr::mutate(Agency = value_1[1]) %>%
+    #Filter so just data remaining
+    dplyr::filter(value_id %in% c("Section")) %>%
+    #Extract the individual depth measurement pairs
+    tidyr::unnest_longer(value_Data) %>%
+    #Extract the measurement name from from the DataSource Name attribute
+    dplyr::mutate(Measurement = base::lapply(value_DataSource, attr, "Name")) %>%
+    #Extract the depth and value to seperate columns
+    tidyr::unnest_wider(value_Data) %>%
+    #Extract the data and survey times
+    tidyr::unnest(cols = c('value_SurveyTime', 'O', 'I1')) %>%
+    #Rename the columns
+    dplyr::rename(Time = value_SurveyTime, Depth = O, Value = I1) %>%
+    #Select the required columns
+    dplyr::select(c(Agency, Site, Measurement, Time, Depth, Value)) %>%
+    #Extract the data from lists
+    tidyr::unnest(cols = c('Site', 'Measurement', 'Time', 'Depth', 'Value')) %>%
+    #Change the time to POSIXct format
+    dplyr::mutate(Time = base::as.POSIXct(Time, tz="UTC",
+                                          tryFormats = c("%Y-%m-%dT%H:%M:%S", "
+                                                         %d-%b-%Y %H:%M:%S",
+                                                         "%Y-%m-%d")))
+}
+
 
 

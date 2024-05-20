@@ -50,21 +50,51 @@ getHilltopData <- function(endpoint,
   dataXml <- tryCatch({hillXmlParse(dataUrl)}, error = function(err) {stop(err)})
   # Check for errors
 
-  # Request the data
-  dataDf <- hilltopMeasurement(dataXml)
-  # Handle the Extrema Request
-  if(!is.null(method)){
-    if(method == "Extrema") {
-      colnames(dataDf) <- c('Time', 'Minimum', 'Mean', 'Maximum', 'Missing', 'Time of Minimum', 'Time of Maximum', 'Site', 'Measurement', 'Units')
-    }
-  }
+  # Get the Hilltop data type
+  hilltopDataType <- hillXmlDataType(dataXml)
 
-  # Handle the Quality Code for continuous measurements being provided diffferently to discrete.
-  # Continuous Data Quality Codes are provided in Column Q1, WQ Quality codes are in Field QualityCode
-  if("Q1" %in% colnames(dataDf)) {
-    # Change field name Q1 to QualityCode
-    names(dataDf)[names(dataDf) == 'Q1'] <- "QualityCode"
-  }
+  # Check the data type of the XML and process accordingly
+  if (hilltopDataType %in% c("SimpleTimeSeries", "WQData")) {
+    # Request the data
+    dataDf <- hilltopMeasurement(dataXml)
+    # Handle the Extrema Request
+    if(!is.null(method)){
+      if(method == "Extrema") {
+        colnames(dataDf) <- c('Time', 'Minimum', 'Mean', 'Maximum', 'Missing', 'Time of Minimum', 'Time of Maximum', 'Site', 'Measurement', 'Units')
+      }
+    }
+
+    # Handle the Quality Code for continuous measurements being provided diffferently to discrete.
+    # Continuous Data Quality Codes are provided in Column Q1, WQ Quality codes are in Field QualityCode
+    if("Q1" %in% colnames(dataDf)) {
+      # Change field name Q1 to QualityCode
+      names(dataDf)[names(dataDf) == 'Q1'] <- "QualityCode"
+    }
+  } else if (hilltopDataType == 'DepthProfile') {
+    # Get the depth profile data
+    # First a different url is needed with anything after the to keyword removed.
+    if(!all(sapply(list(timeInterval,
+                       tsType,
+                       alignment,
+                       method,
+                       interval,
+                       gapTolerance,
+                       showFinal,
+                       dateOnly,
+                       showQuality), is.null))) {
+      dataUrl <- buildDataRequestUrl(endpoint = endpoint,
+                                     site = site,
+                                     measurement = measurement,
+                                     from = from,
+                                     to = to)
+    }
+    # Needs tidying up as is using url and XML2
+    dataDf <- hilltopDepthProfile(dataUrl)
+
+  } else dataDf <- NULL
+
+  if(is.null(dataDf)) {stop("Error retrieving data")}
+
 
   # Return the data
   return(dataDf)

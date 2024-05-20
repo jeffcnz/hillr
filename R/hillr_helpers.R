@@ -163,3 +163,22 @@ hillXmlParse <- function(url) {
     return(xml)
   }
 }
+
+#' Checks what data type the returned XML is
+#'
+#' \code{hillXmlDataType} returns the data type of the XML
+#'
+#' @inheritParams is.hilltopXml
+#'
+#' @return character The data type of the Hilltop data,
+#' options include SimpleTimeSeries, DepthProfile, GaugingResults.
+#'
+#' @export
+#'
+#' @importFrom XML xpathSApply xmlValue
+#'
+hillXmlDataType <- function(xmldata) {
+  #Get a list of the contents of the DataType nodes
+  dataType <- XML::xpathSApply(xmldata, "//DataType", XML::xmlValue)
+  return(dataType[1])
+}
