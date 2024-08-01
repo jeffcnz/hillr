@@ -354,4 +354,166 @@ buildDataRequestUrl <- function(endpoint,
   return(hillUrl)
 }
 
+#' Create a url to request ensemble statistics for a site and measurement.
+#'
+#' \code{buildEnsembleStatsRequestUrl} returns a url to request ensemble statisticss for a site and measurement
+#'
+#' Takes a valid Hilltop server endpoint, a site name, a measurement name  and
+#' optional from, to or timeIntervaland arguments, and a Statistic
+#' argument and returns a url that requests the ensemble statistics for that site and
+#' measurement for the requested time range from the endpoint.
+#'
+#' @inheritParams fixEndpoint
+#'
+#' @inheritParams buildMeasurementListUrl
+#'
+#' @param measurement string A measurement that has data available for the
+#'   requested site on the server.
+#'
+#' @param from string (optional) The date (or date time combination) that data
+#'   is required from (if not provided only the last measurement will be
+#'   provided.)
+#'
+#' @param to string (optional) The date (or date time combination) that data is
+#'   required up to (if not provided data will be provided from the from date to
+#'   the most recent data available.)
+#'
+#' @param timeInterval string (optional) A time interval that data is requested
+#'   over, either of the form P1D, or P3M, or fromDateTime/toDateTime.
+#'
+#' @param statistic string The statistic function to use.  Options are
+#'   HourlyExtrema, DailyExtrema, MonthlyExtrema,
+#'   MeanHourlyExtrema, MeanDailyExtrema, MeanMonthlyExtrema,
+#'   ExtremeHourlyMean, ExtremeDailyMean, ExtremeMonthlyMean,
+#'   HourlyPDF, DailyPDF, MonthlyPDF
+#'
+#' @param lowerPercentile string (optional) The lower percentile value to return from a PDF request.
+#'
+#' @param upperPercentile string (optional) The upper percentile value to return from a PDF request.
+#'
+#' @return string A Hilltop url request for data for the site and measurement in
+#'   the time period for the site.
+#'
+#' @export
+#'
+#' @importFrom stringr str_replace_all
+#'
+buildEnsembleStatsRequestUrl <- function(endpoint,
+                                site,
+                                measurement,
+                                from=NULL,
+                                to=NULL,
+                                timeInterval=NULL,
+                                statistic="MonthlyPDF",
+                                lowerPercentile=NULL,
+                                upperPercentile=NULL) {
+  # check whether a '?' is the last character of the endpoint, if not add one
+  # and check that the endpoint is valid.
+  endpoint <- checkFixEndpoint(endpoint)
 
+  # set the service as 'Hilltop'
+  service <- "Hilltop"
+
+  # set the request as 'EnsembleStats'
+  request <- "EnsembleStats"
+
+  #Check that a site name has been provided.
+  if(missing(site)) {stop("No site name provided.")}
+
+  #Check that a measurement name has been provided.
+  if(missing(measurement)) {stop("No measurement name provided")}
+
+  #Check whether a from date has been provided in the correct format and create an appropriate request string.
+  if(is.null(from)) {
+    #Omit the from key value pair from the request.
+    fromStr <- ""
+  } else {
+    #TO DO - Check that the date format is acceptable.
+    #build the from key value pair
+    fromStr <- base::paste0("&From=", from)
+  }
+
+  #Check whether a to date has been provided in the correct format and create an appropriate request string.
+  if(is.null(to)) {
+    #Omit the from key value pair from the request.
+    toStr <- ""
+  } else {
+    #TO DO - Check that the date format is acceptable.
+    #TO DO - Check that the to date is after the from date.
+    #build the to key value pair
+    toStr <- base::paste0("&To=", to)
+  }
+
+  #Check whether a timeInterval date has been provided in the correct format and create an appropriate request string.
+  if(is.null(timeInterval)) {
+    #Omit the from key value pair from the request.
+    timeIntStr <- ""
+  } else {
+    #TO DO - Check that the date format is acceptable.
+    #TO DO - Check that the to date is after the from date.
+    #build the to key value pair
+    timeIntStr <- base::paste0("&TimeInterval=", timeInterval)
+  }
+
+
+  #Check whether a valid statistic has been provided and create an appropriate request string.
+  if(is.null(statistic)) {
+    stop("No statistic provided.")
+  } else {
+    #Check that the statistic matches allowed values.
+    allowedStats <- c("HourlyExtrema", "DailyExtrema", "MonthlyExtrema",
+                      "MeanHourlyExtrema", "MeanDailyExtrema", "MeanMonthlyExtrema",
+                      "ExtremeHourlyMean", "ExtremeDailyMean", "ExtremeMonthlyMean",
+                      "HourlyPDF", "DailyPDF", "MonthlyPDF")
+    if(statistic %in% allowedStats) {
+      #build the statistics key value pair
+      statsStr <- paste0("&Statistic=", statistic)
+    } else {
+      #Exit and indicate why the error occurred.
+      stop(base::paste("Invalid statistic provided.  Allowed values are ", paste(allowedStats, collapse = ", "),"."))
+    }
+  }
+
+  #Check whether a lowerPercentile has been provided in the correct format and create an appropriate request string.
+  if(is.null(lowerPercentile)) {
+    #Omit the from key value pair from the request.
+    lowerPercentileStr <- ""
+  } else {
+    #TO DO - Check that the string is acceptable (a number between 1 and 99).
+    #build the from key value pair
+    lowerPercentileStr <- base::paste0("&LowerPercentile=", lowerPercentile)
+  }
+
+  #Check whether an upperPercentile has been provided in the correct format and create an appropriate request string.
+  if(is.null(upperPercentile)) {
+    #Omit the from key value pair from the request.
+    upperPercentileStr <- ""
+  } else {
+    #TO DO - Check that the string is acceptable (a number between 1 and 99).
+    #TO DO - Check that the lowerPercentile is less than the upperPercentile.
+    #build the to key value pair
+    upperPercentileStr <- base::paste0("&UpperPercentile=", upperPercentile)
+  }
+
+
+
+
+
+
+  # build the url
+  hillUrl <- base::paste0(endpoint,
+                          "Service=", service,
+                          "&Request=", request,
+                          "&Site=", site,
+                          "&Measurement=", measurement,
+                          fromStr,
+                          toStr,
+                          timeIntStr,
+                          statsStr,
+                          lowerPercentileStr,
+                          upperPercentileStr)
+  # replace spaces with %20
+  hillUrl <- utils::URLencode(hillUrl)
+  # return the url
+  return(hillUrl)
+}

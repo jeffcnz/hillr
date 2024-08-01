@@ -2,6 +2,7 @@
 
 export(anyXmlParse)
 export(buildDataRequestUrl)
+export(buildEnsembleStatsRequestUrl)
 export(buildMeasurementListUrl)
 export(buildSiteListUrl)
 export(fullGetHilltopData)
