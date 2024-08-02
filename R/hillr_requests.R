@@ -150,3 +150,153 @@ getHilltopMeasurements <- function(endpoint, site) {
   # Return the data
   return(measurementsDf)
 }
+
+#' General function to get ensemblestats data from a Hilltop server.
+#'
+#' \code{getHilltopEnsembleStats} retrieves time series data from a Hilltop server.
+#'
+#' Takes a valid Hilltop server endpoint, a site name, a measurement name  and
+#' optional from, to or timeIntervaland arguments, a Statistic and
+#' optional upper and lower percentile arguments and byYear argument.
+#' Returns a dataframe of the relevant Ensemble Statistics for that site and measurement
+#' for the requested time range from the endpoint.
+
+#' @inheritParams buildEnsembleStatsRequestUrl
+#'
+#' @param byYear boolean A flag to indicate whether you want ensemble stats for each year.
+#'   Note: If true then the returned data will be for full years
+#'   based on the from year and to year where data is available
+#'
+#' @return dataframe A dataframe of the ensemble stats.
+#'
+#' @export
+#'
+#' @importFrom lubridate dmy year now ymd
+#'
+#' @importFrom dplyr bind_rows
+
+getHilltopEnsembleStats <- function(endpoint,
+                             site,
+                             measurement,
+                             from=NULL,
+                             to=NULL,
+                             timeInterval=NULL,
+                             statistic="MonthlyPDF",
+                             lowerPercentile=NULL,
+                             upperPercentile=NULL,
+                             byYear=FALSE) {
+  if(!byYear) {
+    # Ensemble data over the full time range
+    # Build the url.
+    eStatsUrl <- buildEnsembleStatsRequestUrl(endpoint = endpoint,
+                                              site = site,
+                                              measurement = measurement,
+                                              from = from,
+                                              to = to,
+                                              timeInterval = timeInterval,
+                                              statistic = statistic,
+                                              lowerPercentile = lowerPercentile,
+                                              upperPercentile = upperPercentile
+    )
+
+
+    # Parse the XML
+    statsXml <- tryCatch({hillXmlParse(eStatsUrl)}, error = function(err) {stop(err)})
+    # Check for errors
+
+    #Get the stats
+    statsData <- hilltopEnsembleStatFull(statsXml)
+  } else {
+
+
+    # Get the start year from the from date (default 2000)
+    if(is.null(from)) {
+      startYear <- 2000
+    } else {
+      startYear <- lubridate::year(lubridate::dmy(from))
+    }
+
+    # Get the end year from the end date (default now)
+    if(is.null(to)) {
+      endYear <- lubridate::year(lubridate::now())
+    } else {
+      endYear <- lubridate::year(lubridate::dmy(from))
+    }
+
+    #Initiate dataframe for returning the results
+    statsData <- data.frame(Site=character(),
+                            stringsAsFactors=FALSE)
+
+    # For each year request the year of data and append to output
+
+    for(yr in startYear:endYear) {
+      message(paste("Retrieving", site, measurement, yr))
+
+      #Initiate dataframe for holding the results from each year
+      yrEnsemble <- data.frame(Site=character(),
+                              stringsAsFactors=FALSE)
+
+      yrEStatsUrl <- buildEnsembleStatsRequestUrl(endpoint = endpoint,
+                                                site = site,
+                                                measurement = measurement,
+                                                from = base::paste0("1/1/",yr),
+                                                to = base::paste0("31/12/",yr),
+                                                timeInterval = NULL,
+                                                statistic = statistic,
+                                                lowerPercentile = lowerPercentile,
+                                                upperPercentile = upperPercentile
+      )
+
+
+      # Parse the XML
+      yrStatsXml <- tryCatch({hillXmlParse(yrEStatsUrl)},
+                             error = function(err) {message(paste("Error retrieving", site, measurement, yr, err))})
+      # Check for errors
+
+      if(!is.null(yrStatsXml)) {
+        #Get the stats
+        yrEnsemble <- tryCatch({hilltopEnsembleStatFull(yrStatsXml)},
+                               error = function(err) {message(paste("Error retrieving", site, measurement, yr, err))})
+
+        #Append results
+        #attach the yrEnsemble to the statsData
+        if(!is.null(yrEnsemble)) {
+          if(base::nrow(yrEnsemble)>0) {
+            # Add a year column
+            yrEnsemble$Year <- yr
+
+            #Append results to master data frame.
+            statsData <- dplyr::bind_rows(statsData, yrEnsemble)
+            } else {next}
+        } else {next}
+
+      }
+    }
+
+
+
+    # Calculate the date from the periodID and the year
+    if(base::grepl("Daily", statistic, fixed = TRUE)) {
+      statsData$Date <- lubridate::dmy(base::paste0(statsData$periodID, "-", statsData$Year))
+    } else {
+      if(base::grepl("Monthly", statistic, fixed = TRUE)) {
+        statsData$Date <- lubridate::dmy(base::paste0("1-", statsData$periodID, "-", statsData$Year))
+      }
+    }
+
+
+
+
+    # Return the results
+    return(statsData)
+  }
+
+
+
+
+  if(is.null(statsData)) {stop("Error retrieving data")}
+
+
+  # Return the data
+  return(statsData)
+}

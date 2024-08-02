@@ -2,7 +2,7 @@
 % Please edit documentation in R/hillr_full_request.R
 \name{fullGetHilltopData}
 \alias{fullGetHilltopData}
-\title{Multiple sites and measurements to Dataframe.}
+\title{Multiple sites and measurements data to Dataframe.}
 \usage{
 fullGetHilltopData(
   endpoint,
@@ -86,7 +86,7 @@ Takes a valid Hilltop server endpoint, a vector of site names, a vector of
 measurement names and optional from, to or timeIntervaland arguments, an
 optional timeseries type argument, and an option argument identifying the
 type of metadata to be returned in the output dataframe. The function returns
-a dataframe of the data for that site and measurement for the requested time
+a dataframe of the data for the sites and measurements for the requested time
 range from the endpoint. For standard time series, statistics can be
 obtained, to request these a method, interval and allignment argument need to
 be provided.  The option argument provided determines what metadata is

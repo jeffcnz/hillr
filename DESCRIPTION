@@ -1,7 +1,7 @@
 Package: hillr
 Type: Package
 Title: Interaction With A Hilltop Timeseries Server
-Version: 0.4.5
+Version: 0.4.6
 Author: Jeff Cooke
 Maintainer: Jeff Cooke <jeffjcooke@hotmail.com>
 Description: Functions to interact with a Hilltop time series server 

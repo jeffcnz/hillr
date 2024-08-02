@@ -28,6 +28,9 @@ hilltopEnsembleStatBkgnd <- function(xmldata){
 
   fintemp <- stats::setNames(base::data.frame(t(bgtemp[,-1])), bgtemp[,1])
 
+  base::colnames(fintemp)[base::which(base::names(fintemp) == "LowerPercentile")] <- "RequestedLowerPercentile"
+  base::colnames(fintemp)[base::which(base::names(fintemp) == "UpperPercentile")] <- "RequestedUpperPercentile"
+
   return(fintemp)
 }
 
@@ -82,7 +85,9 @@ hilltopEnsembleStatByTimePeriod <- function(xmldata){
 #' @export
 #'
 hilltopEnsembleStatFull <- function(xmldata) {
-  bg <- hilltopEnsembleStatBkgnd(xmldata)
-  pe <- hilltopEnsembleStatByTimePeriod(xmldata)
-  full <- base::merge(bg, pe, by = c("Statistic"), all = TRUE)
+  tryCatch({bg <- hilltopEnsembleStatBkgnd(xmldata)
+            pe <- hilltopEnsembleStatByTimePeriod(xmldata)
+            full <- base::merge(bg, pe, by = c("Statistic"), all = TRUE)
+            return(full)},
+                    error = function(err) {message("Error retrieving")})
 }
