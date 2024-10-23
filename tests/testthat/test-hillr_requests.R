@@ -23,6 +23,11 @@ testDepthProfile <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirod
                                    measurement = "[pH (Depth Profile)]",
                                    from = "1/1/2020")
 
+testAirQuality <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
+                                   site = "Marewa Park Fidas",
+                                   measurement = "PM10 Daily Average",
+                                   from = "1/8/2024")
+
 testSiteList <- getHilltopSites(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?")
 
 testSiteListNoLoc <- getHilltopSites(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
@@ -86,6 +91,15 @@ test_that("getHilltopData returns a list.", {
 
 test_that("getHilltopData returns data.", {
   expect_gt(nrow(testDepthProfile), 0)
+})
+
+# Test GetHilltopData Air Quality Data Type
+test_that("getHilltopData returns a list.", {
+  expect_type(testAirQuality, "list")
+})
+
+test_that("getHilltopData returns data.", {
+  expect_gt(nrow(testAirQuality), 0)
 })
 
 # Check field names
