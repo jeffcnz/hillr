@@ -28,6 +28,11 @@ testAirQuality <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodat
                                    measurement = "PM10 Daily Average",
                                    from = "1/8/2024")
 
+testWindDirection <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
+                                 site = "Awatoto AQ",
+                                 measurement = "Average Wind Direction",
+                                 from = "1/8/2024")
+
 testSiteList <- getHilltopSites(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?")
 
 testSiteListNoLoc <- getHilltopSites(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?",
@@ -100,6 +105,15 @@ test_that("getHilltopData returns a list.", {
 
 test_that("getHilltopData returns data.", {
   expect_gt(nrow(testAirQuality), 0)
+})
+
+# Test GetHilltopData WindDirection Data Type
+test_that("getHilltopData returns a list.", {
+  expect_type(testWindDirection, "list")
+})
+
+test_that("getHilltopData returns data.", {
+  expect_gt(nrow(testWindDirection), 0)
 })
 
 # Check field names
