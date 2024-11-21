@@ -54,7 +54,7 @@ getHilltopData <- function(endpoint,
   hilltopDataType <- hillXmlDataType(dataXml)
 
   # Check the data type of the XML and process accordingly
-  if (hilltopDataType %in% c("SimpleTimeSeries", "WQData", "AirQuality", "WindDirection")) {
+  if (hilltopDataType %in% c("SimpleTimeSeries", "WQData", "AirQuality", "WindDirection", "Rain6")) {
     # Request the data
     dataDf <- hilltopMeasurement(dataXml)
     # Handle the Extrema Request
