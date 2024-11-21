@@ -1,7 +1,7 @@
 Package: hillr
 Type: Package
 Title: Interaction With A Hilltop Timeseries Server
-Version: 0.4.8
+Version: 0.4.9
 Author: Jeff Cooke
 Maintainer: Jeff Cooke <jeffjcooke@hotmail.com>
 Description: Functions to interact with a Hilltop time series server 
@@ -12,7 +12,7 @@ LazyData: true
 Imports: 
     XML,
     reshape2,
-    RCurl,
+    httr,
     stats,
     dplyr,
     lubridate,
@@ -20,7 +20,7 @@ Imports:
     stringr,
     xml2,
     tibble
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Suggests: 
     knitr,
     rmarkdown,

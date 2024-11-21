@@ -4,6 +4,12 @@ testData <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMAR
                            from = "1/1/2020",
                            to = "3/1/2020")
 
+testhttpData <-getHilltopData(endpoint = "http://tsdata.horizons.govt.nz/data.hts?",
+                              site = "Manawatu at Teachers College",
+                              measurement = "Flow",
+                              from = "1/1/2024",
+                              to = "3/1/2024")
+
 testWQ <- getHilltopData(endpoint = "https://data.hbrc.govt.nz/Envirodata/EMARDiscrete.hts?",
                         site = "Maraetotara Lagoon",
                         measurement = "E. Coli",
@@ -69,6 +75,14 @@ test_that("getHilltopData returns a list.", {
 
 test_that("getHilltopData returns data.", {
   expect_gt(nrow(testData), 0)
+})
+
+test_that("getHilltopData from http returns a list.", {
+  expect_type(testhttpData, "list")
+})
+
+test_that("getHilltopData from http returns data.", {
+  expect_gt(nrow(testhttpData), 0)
 })
 
 # Test GetHilltopData Water Quality Timeseries

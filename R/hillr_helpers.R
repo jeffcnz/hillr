@@ -77,15 +77,17 @@ is.hilltopXml <- function(xmldata){
 #'
 #' @export
 #'
-#' @importFrom RCurl getURL
+#' @importFrom httr GET
 #'
 #' @importFrom XML xmlParse
 #'
 anyXmlParse <- function(url) {
-  if(base::length(base::grep("https",url))>0){
-    doc <- RCurl::getURL(url, ssl.verifypeer = FALSE)
-    return(XML::xmlParse(doc))
-  } else {return(XML::xmlParse(url))}
+  XML::xmlParse(base::rawToChar(httr::GET(url)$content))
+  ##Old function didn't handle proxy http / https requests
+  #if(base::length(base::grep("https",url))>0){
+  #  doc <- RCurl::getURL(url, ssl.verifypeer = FALSE)
+  #  return(XML::xmlParse(doc))
+  #} else {return(XML::xmlParse(url))}
 }
 
 #' Determine The TimePeriod Of Hilltop XML Ensemble Data.
